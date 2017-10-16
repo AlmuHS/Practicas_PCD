@@ -46,8 +46,9 @@ public class Pila implements IPila{
         if(pilavacia())
             throw new java.lang.Exception("Error: la pila esta vacia");
         else{
-            Object primero = datos[cima];
             cima--;
+            Object primero = datos[cima];
+            //cima--;
             numelementos--;
             return primero;
         }
