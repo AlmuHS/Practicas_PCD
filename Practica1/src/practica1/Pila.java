@@ -35,9 +35,9 @@ public class Pila implements IPila{
             throw new java.lang.Exception("Error: la pila esta llena");
         }
         else{
-            cima++;
             datos[cima] = elemento;
             numelementos++;
+            cima++;
         }
     }
 
