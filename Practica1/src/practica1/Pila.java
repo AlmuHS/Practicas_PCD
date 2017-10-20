@@ -48,7 +48,6 @@ public class Pila implements IPila{
         else{
             cima--;
             Object primero = datos[cima];
-            //cima--;
             numelementos--;
             return primero;
         }
