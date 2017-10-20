@@ -31,10 +31,14 @@ public class Consumidor implements Runnable{
     }
     
     void consumir(){
+        int valor;
         for (int i = 0; i < 10; i++) {
             
             try {
-                lapila.Desapila();
+                valor = (int) lapila.Desapila();
+                System.out.println("Soy consumidor y extraigo el valor " + valor);
+                
+                
             } catch (Exception ex) {
                 Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
             }

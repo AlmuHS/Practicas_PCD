@@ -37,7 +37,9 @@ public class Productor extends Thread{
         for (int i = 0; i < 10; i++) {
             
             try {
-                lapila.Apila(randnum.nextInt());
+                int num = randnum.nextInt()%20;
+                System.out.println("Soy productor e inserto el valor " + num);
+                lapila.Apila(num);
             } catch (Exception ex) {
                 Logger.getLogger(Productor.class.getName()).log(Level.SEVERE, null, ex);
             }
