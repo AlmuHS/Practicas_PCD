@@ -48,16 +48,16 @@ public class CanvasPila extends Canvas{
         Graphics og = offscreen.getGraphics();// parpadeo
         
         Font f = new Font("Cantarell", Font.TRUETYPE_FONT + Font.BOLD, 16); 
-             
+           
+        
+        //og.fillOval(25, 35, 20, 20);
+        int i = 50;
+        
         og.setColor(Color.red);
-        og.fillOval(25, 35, 20, 20);
         og.setFont(f);
-        og.drawString("valor del contador 1: " , 50, 50);
-
-        og.setColor(Color.GREEN);
-        og.fillOval(25, 85, 20, 20);
-        og.setFont(f);
-        og.drawString("valor del contador 2: " , 50, 100);
+        
+        if(datos != null && numelementos != 0) og.drawString((String) datos[cima-1], i, 50);
+        i *= 2;
 
         g.drawImage(offscreen, 0, 0, null);
     }
@@ -68,10 +68,14 @@ public class CanvasPila extends Canvas{
     }
     
     public void avisa(String mensaje){
-        
+        System.out.println(mensaje);
+        repaint();
     }
     
     public void representa(Object[] buf, int cima, int numele){
-        
+        datos = buf;
+        this.cima = cima;
+        numelementos = numele;
+        repaint();
     }
 }

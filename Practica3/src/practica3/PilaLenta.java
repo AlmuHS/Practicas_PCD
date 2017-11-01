@@ -45,13 +45,14 @@ public class PilaLenta implements IPila{
     @Override
     public synchronized void Apila(Object elemento) throws Exception{
         if(pilallena()){
+            canvas.avisa("Error, la pila esta llena");
             throw new java.lang.Exception("Error: la pila esta llena");
         }
         else{
             datos[cima] = elemento;
-            //Thread.sleep(10);
+            Thread.sleep(10);
             cima++;
-            //Thread.sleep(10);
+            Thread.sleep(10);
             numelementos++;
             canvas.representa(datos, cima, numelementos);
         }
@@ -60,14 +61,16 @@ public class PilaLenta implements IPila{
     @Override
     public synchronized Object Desapila() throws Exception{
         
-        if(pilavacia())
-            throw new java.lang.Exception("Error: la pila esta vacia");
+        if(pilavacia()){
+            canvas.avisa("Error, la pila esta vacía");
+            throw new java.lang.Exception("Error: la pila esta vacia");  
+        }
         
         else{
             Object primero = datos[cima - 1];
-            //Thread.sleep(10);
+            Thread.sleep(10);
             cima--;
-            //Thread.sleep(10);
+            Thread.sleep(10);
             numelementos--;
             canvas.representa(datos, cima, numelementos);
             return primero;
@@ -76,8 +79,11 @@ public class PilaLenta implements IPila{
     
     @Override
     public Object Primero() throws Exception{
-        if(pilavacia())
+        if(pilavacia()){
+            canvas.avisa("Error, la pila esta vacía");
             throw new java.lang.Exception("Error: la pila esta vacia");
+           
+        }
         else{
             return datos[cima];
         }

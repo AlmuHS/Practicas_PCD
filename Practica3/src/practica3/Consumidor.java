@@ -39,7 +39,7 @@ public class Consumidor implements Runnable{
                 System.out.println("Soy consumidor y extraigo el valor " + valor); 
             } catch (Exception ex) {
                 Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
-            }            
+            }     
         }//Fin for
         
     }
