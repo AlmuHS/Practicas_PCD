@@ -17,8 +17,6 @@
 package practica3;
 
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -34,8 +32,7 @@ public class Productor extends Thread{
     void producir(){
         Random randnum = new Random();
         
-        for (int i = 0; i < 10; i++) {
-            
+        for (int i = 0; i < 10; i++) { 
             try {
                 int num = randnum.nextInt()%20;
                 System.out.println("Soy productor e inserto el valor " + num);

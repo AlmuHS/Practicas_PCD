@@ -16,9 +16,6 @@
  */
 package practica3;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author almu
@@ -36,15 +33,8 @@ public class Consumidor implements Runnable{
             
             try {
                 valor = (int) lapila.Desapila();
-                System.out.println("Soy consumidor y extraigo el valor " + valor);
-                
-                
-            } catch (Exception ex) {
-                Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            
-        
+                System.out.println("Soy consumidor y extraigo el valor " + valor); 
+            } catch (Exception ex) {}            
         }//Fin for
         
     }

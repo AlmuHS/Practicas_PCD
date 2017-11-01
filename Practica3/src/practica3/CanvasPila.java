@@ -2,10 +2,13 @@ package practica3;
 
 
 import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 
 /*
- * Copyright (C) 2017 almu
+ * Copyright (C) 2017 Almudena García Jurado-Centurión
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,16 +36,34 @@ public class CanvasPila extends Canvas{
     private String mensaje;
     
     public CanvasPila(int capacidad){
-        
-        this.capacidad = capacidad;        
+        this.capacidad = capacidad;    
     }
     
+    @Override
     public void paint(Graphics g){
+        this.setSize(400, 200);
+        this.setBackground(Color.red);
         
+        //Image offscreen = createImage(this.getWidth(), this.getHeight()); // parpadeo
+      
+        Font f = new Font("Cantarell", Font.TRUETYPE_FONT + Font.BOLD, 16); 
+             
+        g.setColor(Color.red);
+        //og.fillOval(25, 35, 20, 20);
+        g.setFont(f);
+        g.drawString("valor del contador 1: " , 50, 50);
+
+        g.setColor(Color.GREEN);
+        //og.fillOval(25, 85, 20, 20);
+        g.drawString("valor del contador 2: " , 50, 100);
+
+     
+        //g.drawImage(offscreen, 0, 0, null);
     }
     
+    @Override
     public void update(Graphics g){
-        
+        paint(g);
     }
     
     public void avisa(String mensaje){

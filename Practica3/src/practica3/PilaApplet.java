@@ -1,7 +1,7 @@
 package practica3;
 
 /*
- * Copyright (C) 2017 almu
+ * Copyright (C) 2017 Almudena García Jurado-Centurión
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@ package practica3;
  */
 
 import java.applet.Applet;
+import java.awt.Color;
 
 /**
  *
@@ -27,6 +28,7 @@ public class PilaApplet extends Applet {
     
     private Productor prod; 
     private Consumidor cons;
+    Thread tcon; 
     
     /**
      * Initialization method that will be called after the applet is loaded into
@@ -34,19 +36,29 @@ public class PilaApplet extends Applet {
      */
     @Override
     public void init() {
-        // TODO start asynchronous download of heavy resources
-        
+       CanvasPila cp = new CanvasPila(10);
+       PilaLenta pila = new PilaLenta(10, cp);
+       
+       setSize(400, 200);
+       this.setBackground(Color.red);
+       
+       add(cp); 
+       
+       prod = new Productor(pila);
+       cons = new Consumidor(pila);
+       tcon = new Thread(cons);      
     }
     
     @Override
-    public void start(){
-        
+    public void start(){  
+        prod.start();
+        tcon.start();
     }
     
     @Override
     public void stop(){
-        
+        prod.interrupt();
+        tcon.interrupt();
     }
 
-    // TODO overwrite start(), stop() and destroy() methods
 }
