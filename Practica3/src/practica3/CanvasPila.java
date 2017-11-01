@@ -42,23 +42,24 @@ public class CanvasPila extends Canvas{
     @Override
     public void paint(Graphics g){
         this.setSize(400, 200);
-        this.setBackground(Color.red);
+        this.setBackground(Color.GREEN);
         
-        //Image offscreen = createImage(this.getWidth(), this.getHeight()); // parpadeo
-      
+        Image offscreen = createImage(this.getWidth(), this.getHeight()); // parpadeo
+        Graphics og = offscreen.getGraphics();// parpadeo
+        
         Font f = new Font("Cantarell", Font.TRUETYPE_FONT + Font.BOLD, 16); 
              
-        g.setColor(Color.red);
-        //og.fillOval(25, 35, 20, 20);
-        g.setFont(f);
-        g.drawString("valor del contador 1: " , 50, 50);
+        og.setColor(Color.red);
+        og.fillOval(25, 35, 20, 20);
+        og.setFont(f);
+        og.drawString("valor del contador 1: " , 50, 50);
 
-        g.setColor(Color.GREEN);
-        //og.fillOval(25, 85, 20, 20);
-        g.drawString("valor del contador 2: " , 50, 100);
+        og.setColor(Color.GREEN);
+        og.fillOval(25, 85, 20, 20);
+        og.drawString("valor del contador 2: " , 50, 100);
 
      
-        //g.drawImage(offscreen, 0, 0, null);
+        g.drawImage(offscreen, 0, 0, null);
     }
     
     @Override

@@ -39,10 +39,9 @@ public class PilaApplet extends Applet {
        CanvasPila cp = new CanvasPila(10);
        PilaLenta pila = new PilaLenta(10, cp);
        
-       setSize(400, 200);
+       this.setSize(400, 200);
        this.setBackground(Color.red);
-       
-       add(cp); 
+       this.add(cp); 
        
        prod = new Productor(pila);
        cons = new Consumidor(pila);
