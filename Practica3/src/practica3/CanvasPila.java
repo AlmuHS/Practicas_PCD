@@ -36,12 +36,12 @@ public class CanvasPila extends Canvas{
     private String mensaje;
     
     public CanvasPila(int capacidad){
-        this.capacidad = capacidad;    
+        this.capacidad = capacidad;
+        setSize(400, 200);
     }
     
     @Override
     public void paint(Graphics g){
-        this.setSize(400, 200);
         this.setBackground(Color.GREEN);
         
         Image offscreen = createImage(this.getWidth(), this.getHeight()); // parpadeo
@@ -56,9 +56,9 @@ public class CanvasPila extends Canvas{
 
         og.setColor(Color.GREEN);
         og.fillOval(25, 85, 20, 20);
+        og.setFont(f);
         og.drawString("valor del contador 2: " , 50, 100);
 
-     
         g.drawImage(offscreen, 0, 0, null);
     }
     

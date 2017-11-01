@@ -17,6 +17,8 @@
 package practica3;
 
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,7 +39,9 @@ public class Productor extends Thread{
                 int num = randnum.nextInt()%20;
                 System.out.println("Soy productor e inserto el valor " + num);
                 lapila.Apila(num);
-            } catch (Exception ex) {}
+            } catch (Exception ex) {
+                Logger.getLogger(Productor.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
         }//Fin for
         

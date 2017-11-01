@@ -45,7 +45,7 @@ public class PilaApplet extends Applet {
        
        prod = new Productor(pila);
        cons = new Consumidor(pila);
-       tcon = new Thread(cons);      
+       tcon = new Thread(cons);  
     }
     
     @Override
