@@ -28,7 +28,7 @@ public class PilaApplet extends Applet {
     
     private Productor prod; 
     private Consumidor cons;
-    Thread tcon; 
+    private Thread tcon; 
     
     /**
      * Initialization method that will be called after the applet is loaded into
@@ -50,7 +50,7 @@ public class PilaApplet extends Applet {
     }
     
     @Override
-    public void start(){  
+    public void start(){ 
         prod.start();
         tcon.start();
     }

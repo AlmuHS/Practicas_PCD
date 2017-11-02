@@ -63,7 +63,7 @@ public class PilaLenta implements IPila{
         
         if(pilavacia()){
             canvas.avisa("Error, la pila esta vacía");
-            throw new java.lang.Exception("");
+            throw new java.lang.Exception("Error, la pila esta vacía");
         }
         
         else{
@@ -81,7 +81,7 @@ public class PilaLenta implements IPila{
     public Object Primero() throws Exception{
         if(pilavacia()){
             canvas.avisa("Error, la pila esta vacía");
-            throw new java.lang.Exception("");
+            throw new java.lang.Exception("Error, la pila esta vacía");
         }
         else{
             return datos[cima];

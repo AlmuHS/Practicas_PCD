@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.text.AttributedCharacterIterator;
 
 /*
  * Copyright (C) 2017 Almudena García Jurado-Centurión
