@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.text.AttributedCharacterIterator;
 
 /*
  * Copyright (C) 2017 Almudena García Jurado-Centurión
@@ -49,11 +50,11 @@ public class CanvasPila extends Canvas{
         
         Font f = new Font("Cantarell", Font.TRUETYPE_FONT + Font.BOLD, 16); 
            
-        
-        og.setColor(Color.red);
-        og.setFont(f);
         //og.drawRect(50, 50, 20, 20);
-
+        og.setFont(f);
+        og.setColor(Color.red);
+        og.drawString(String.valueOf(numelementos), 50, 20);
+        
         if(datos != null){
             for (int i = 0; i < datos.length; i++) {
                 Object dato = datos[i];
