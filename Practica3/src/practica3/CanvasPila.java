@@ -52,7 +52,6 @@ public class CanvasPila extends Canvas{
         //og.drawRect(50, 50, 20, 20);
         og.setFont(f);
         og.setColor(Color.red);
-        og.drawString(String.valueOf(numelementos), 50, 20);
         
         if(datos != null){
             for (int i = 0; i < datos.length; i++) {

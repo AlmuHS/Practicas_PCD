@@ -84,7 +84,7 @@ public class PilaLenta implements IPila{
             throw new java.lang.Exception("Error, la pila esta vacía");
         }
         else{
-            return datos[cima];
+            return datos[cima - 1];
         }
     }
     
