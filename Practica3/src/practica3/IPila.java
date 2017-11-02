@@ -23,7 +23,7 @@ package practica3;
  */
 public interface IPila {
     public int GetNum();
-    public void Apila(Object elemento) throws Exception;
-    public Object Desapila() throws Exception;
-    public Object Primero() throws Exception;
+    public void Apila(Object elemento);
+    public Object Desapila();
+    public Object Primero();
 }

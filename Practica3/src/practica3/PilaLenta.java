@@ -43,50 +43,48 @@ public class PilaLenta implements IPila{
     }
 
     @Override
-    public synchronized void Apila(Object elemento) throws Exception{
+    public synchronized void Apila(Object elemento){
         if(pilallena()){
             canvas.avisa("Error, la pila esta llena");
-            throw new java.lang.Exception("Error: la pila esta llena");
         }
         else{
             datos[cima] = elemento;
-            Thread.sleep(10);
+            //Thread.sleep(10);
             cima++;
-            Thread.sleep(10);
+            //Thread.sleep(10);
             numelementos++;
             canvas.representa(datos, cima, numelementos);
         }
     }
 
     @Override
-    public synchronized Object Desapila() throws Exception{
+    public synchronized Object Desapila(){
         
         if(pilavacia()){
             canvas.avisa("Error, la pila esta vacía");
-            throw new java.lang.Exception("Error: la pila esta vacia");  
         }
         
         else{
             Object primero = datos[cima - 1];
-            Thread.sleep(10);
+            //Thread.sleep(10);
             cima--;
-            Thread.sleep(10);
+            //Thread.sleep(10);
             numelementos--;
             canvas.representa(datos, cima, numelementos);
             return primero;
         }
+        return null;
     }
     
     @Override
-    public Object Primero() throws Exception{
+    public Object Primero(){
         if(pilavacia()){
             canvas.avisa("Error, la pila esta vacía");
-            throw new java.lang.Exception("Error: la pila esta vacia");
-           
         }
         else{
             return datos[cima];
         }
+        return null;
     }
     
     private boolean pilavacia(){
