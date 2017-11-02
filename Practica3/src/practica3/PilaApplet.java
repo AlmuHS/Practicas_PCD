@@ -34,6 +34,7 @@ public class PilaApplet extends Applet {
      * Initialization method that will be called after the applet is loaded into
      * the browser.
      */
+    
     @Override
     public void init() {
        CanvasPila cp = new CanvasPila(10);
