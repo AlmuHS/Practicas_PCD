@@ -50,15 +50,16 @@ public class CanvasPila extends Canvas{
         Font f = new Font("Cantarell", Font.TRUETYPE_FONT + Font.BOLD, 16); 
            
         
-        //og.fillOval(25, 35, 20, 20);
-        int i = 50;
-        
         og.setColor(Color.red);
         og.setFont(f);
-        
-        if(datos != null && numelementos != 0) og.drawString((String) datos[cima-1], i, 50);
-        i *= 2;
+        //og.drawRect(50, 50, 20, 20);
 
+        if(datos != null){
+            for (int i = 0; i < datos.length; i++) {
+                Object dato = datos[i];
+                if(dato != null) og.drawString(dato.toString(), 50, i + 100);
+            }
+        }
         g.drawImage(offscreen, 0, 0, null);
     }
     

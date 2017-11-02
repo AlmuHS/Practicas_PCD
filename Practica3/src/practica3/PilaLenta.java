@@ -50,9 +50,9 @@ public class PilaLenta implements IPila{
         }
         else{
             datos[cima] = elemento;
-            Thread.sleep(10);
+            //Thread.sleep(10);
             cima++;
-            Thread.sleep(10);
+            //Thread.sleep(10);
             numelementos++;
             canvas.representa(datos, cima, numelementos);
         }
@@ -68,9 +68,9 @@ public class PilaLenta implements IPila{
         
         else{
             Object primero = datos[cima - 1];
-            Thread.sleep(10);
+            //Thread.sleep(10);
             cima--;
-            Thread.sleep(10);
+            //Thread.sleep(10);
             numelementos--;
             canvas.representa(datos, cima, numelementos);
             return primero;
