@@ -56,7 +56,7 @@ public class CanvasPila extends Canvas{
         if(datos != null){
             for (int i = 0; i < datos.length; i++) {
                 Object dato = datos[i];
-                if(dato != null) og.drawString(dato.toString(), 50, i + 100);
+                if(dato != null) og.drawString(dato.toString(), 50 + i, 50);
             }
         }
         g.drawImage(offscreen, 0, 0, null);

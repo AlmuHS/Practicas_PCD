@@ -46,7 +46,7 @@ public class PilaLenta implements IPila{
     public synchronized void Apila(Object elemento) throws Exception{
         if(pilallena()){
             canvas.avisa("Error, la pila esta llena");
-            throw new java.lang.Exception("");
+            throw new java.lang.Exception("Error, la pila esta llena");
         }
         else{
             datos[cima] = elemento;

@@ -37,8 +37,10 @@ public class PilaApplet extends Applet {
     
     @Override
     public void init() {
-       CanvasPila cp = new CanvasPila(10);
-       PilaLenta pila = new PilaLenta(10, cp);
+       int capacidad = 10; 
+        
+       CanvasPila cp = new CanvasPila(capacidad);
+       PilaLenta pila = new PilaLenta(capacidad, cp);
        
        this.setSize(400, 200);
        this.setBackground(Color.red);
