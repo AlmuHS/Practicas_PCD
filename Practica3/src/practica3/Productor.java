@@ -16,6 +16,7 @@
  */
 package practica3;
 
+import static java.lang.Math.abs;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,15 +37,17 @@ public class Productor extends Thread{
         
         for (int i = 0; i < 10; i++) { 
             try {
-                int num = randnum.nextInt()%20;
+                int num = abs(randnum.nextInt()%20);
+                Thread.sleep(1000);
                 System.out.println("Soy productor e inserto el valor " + num);
                 lapila.Apila(num);
+                
             } catch (Exception ex) {
                 Logger.getLogger(Productor.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         }//Fin for
-        
+        System.out.println("Fin productor");
     }
     
     public void run(){

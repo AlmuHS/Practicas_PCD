@@ -42,7 +42,7 @@ public class PilaApplet extends Applet {
        CanvasPila cp = new CanvasPila(capacidad);
        PilaLenta pila = new PilaLenta(capacidad, cp);
        
-       this.setSize(400, 200);
+       this.setSize(500, 600);
        this.setBackground(Color.red);
        this.add(cp); 
        

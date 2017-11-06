@@ -37,27 +37,44 @@ public class CanvasPila extends Canvas{
     
     public CanvasPila(int capacidad){
         this.capacidad = capacidad;
-        setSize(400, 200);
+        setSize(450, 600);
     }
     
     @Override
     public void paint(Graphics g){
-        this.setBackground(Color.GREEN);
+        this.setBackground(Color.lightGray);
         
         Image offscreen = createImage(this.getWidth(), this.getHeight()); // parpadeo
         Graphics og = offscreen.getGraphics();// parpadeo
         
-        Font f = new Font("Cantarell", Font.TRUETYPE_FONT + Font.BOLD, 16); 
-           
-        //og.drawRect(50, 50, 20, 20);
+        Font f = new Font("DejaVu Sans", Font.TRUETYPE_FONT + Font.BOLD + Font.PLAIN, 30); 
+            
         og.setFont(f);
         og.setColor(Color.red);
         
+        //Dibujo cuadrados
+        for (int i = 0; i < capacidad; i++) {
+            og.drawRect(200, 85 + 40 * (i-1), 80, 80);
+        }
+        
+        //Dibujo contenidos de la pila
         if(datos != null){
-            for (int i = 0; i < datos.length; i++) {
+            for (int i = 0; i < numelementos; i++) {
                 Object dato = datos[i];
-                if(dato != null) og.drawString(dato.toString(), 50 + i, 50);
+                if(dato != null) og.drawString(dato.toString(), 200, 80 + 40*i);
             }
+            
+            //Muestro numero de elementos y capacidad actual
+            Font f1 = new Font("DejaVu Sans", Font.TRUETYPE_FONT + Font.BOLD, 15);
+            og.setFont(f1);
+            og.drawString("Numero de elementos: " + String.valueOf(numelementos), 100, 510);
+            og.drawString("Capacidad: " + String.valueOf(capacidad - numelementos), 100, 530);
+        }
+        //En caso de error, muestro mensaje
+        else if(mensaje != null || numelementos == capacidad){
+            Font f1 = new Font("DejaVu Sans", Font.TRUETYPE_FONT + Font.BOLD, 15);
+            og.setFont(f1);
+            og.drawString(mensaje, 100, 560);
         }
         g.drawImage(offscreen, 0, 0, null);
     }
@@ -68,7 +85,7 @@ public class CanvasPila extends Canvas{
     }
     
     public void avisa(String mensaje){
-        System.out.println(mensaje);
+        this.mensaje = mensaje;
         repaint();
     }
     

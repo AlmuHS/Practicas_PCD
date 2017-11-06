@@ -35,13 +35,15 @@ public class Consumidor implements Runnable{
         for (int i = 0; i < 10; i++) {
             
             try {
+                Thread.sleep(500);
                 valor = (int) lapila.Desapila();
-                System.out.println("Soy consumidor y extraigo el valor " + valor); 
+                System.out.println("Soy consumidor y extraigo el valor " + valor);
+                
             } catch (Exception ex) {
                 Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
             }     
         }//Fin for
-        
+        System.out.println("Fin consumidor");       
     }
     
     @Override
