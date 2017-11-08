@@ -49,8 +49,8 @@ public class PilaLenta implements IPila{
         while(pilallena() && intentos < 3){
             wait();
             canvas.avisa("Error, la pila esta llena");
-            intentos++;
         }
+        intentos++;
         
         
         if(!pilallena()){
@@ -58,7 +58,6 @@ public class PilaLenta implements IPila{
             cima++;
             numelementos++;
             canvas.representa(datos, cima, numelementos);
-            //Thread.sleep(1000);
             notifyAll();
         }
         else{
@@ -79,7 +78,6 @@ public class PilaLenta implements IPila{
         cima--;
         numelementos--;
         canvas.representa(datos, cima, numelementos);
-        //Thread.sleep(1000);
         
         return primero;
     }

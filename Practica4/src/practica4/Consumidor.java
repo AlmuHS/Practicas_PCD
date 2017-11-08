@@ -40,7 +40,7 @@ public class Consumidor implements Runnable{
             try {
                 valor = (int) lapila.Desapila();
                 System.out.println("Soy consumidor y extraigo el valor " + valor);
-                Thread.sleep(abs(randnum.nextInt() % 3 + 1));
+                Thread.sleep(abs(randnum.nextInt() % 3000 + 1000));
             } catch (Exception ex) {
                 Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
             }

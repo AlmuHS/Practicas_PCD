@@ -42,7 +42,7 @@ public class Productor extends Thread{
                 System.out.println("Soy productor e inserto el valor " + num);
                 lapila.Apila(num);
 
-                Thread.sleep(abs(randnum.nextInt() % 3 + 1));
+                Thread.sleep(abs(randnum.nextInt() % 3000 + 1000));
             }
             
         } catch (Exception ex) {
