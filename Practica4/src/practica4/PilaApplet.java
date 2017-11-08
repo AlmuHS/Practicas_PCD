@@ -1,4 +1,4 @@
-package practica3;
+package practica4;
 
 /*
  * Copyright (C) 2017 Almudena García Jurado-Centurión
@@ -37,12 +37,12 @@ public class PilaApplet extends Applet {
     
     @Override
     public void init() {
-       int capacidad = 10; 
+       int capacidad = 15; 
         
        CanvasPila cp = new CanvasPila(capacidad);
        PilaLenta pila = new PilaLenta(capacidad, cp);
        
-       this.setSize(400, 400);
+       this.setSize(450, 600);
        this.setBackground(Color.red);
        this.add(cp); 
        

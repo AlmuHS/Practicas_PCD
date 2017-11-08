@@ -14,8 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package practica3;
+package practica4;
 
+import static java.lang.Math.abs;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,32 +25,36 @@ import java.util.logging.Logger;
  *
  * @author almu
  */
-public class Consumidor implements Runnable{
+public class Productor extends Thread{
     private PilaLenta lapila;
     
-    public Consumidor(PilaLenta pila){
+    public Productor(PilaLenta pila){
         lapila = pila;
     }
     
-    void consumir(){
-        int valor;
-        for (int i = 0; i < 10; i++) {
+    void producir(){
+        Random randnum = new Random();
+        
+        try {
             
-            try {
-                valor = (int) lapila.Desapila();
-                System.out.println("Soy consumidor y extraigo el valor " + valor); 
-            } catch (Exception ex) {
-                Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
-            }     
-        }//Fin for
+            for (int i = 0; i < 15; i++) { 
+                int num = randnum.nextInt()%20;
+                System.out.println("Soy productor e inserto el valor " + num);
+                lapila.Apila(num);
+
+                Thread.sleep(abs(randnum.nextInt() % 3 + 1));
+            }
+            
+        } catch (Exception ex) {
+                Logger.getLogger(Productor.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }//Fin try-catch
         
     }
     
     @Override
     public void run(){
-        consumir();
+        producir();
     }
     
 }
-    
-
