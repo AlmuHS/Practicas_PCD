@@ -50,9 +50,7 @@ public class PilaLenta implements IPila{
             wait();
             intentos++;
         }
-        canvas.avisa("Error, la pila esta llena");
         
-       
         if(!pilallena()){
             datos[cima] = elemento;
             cima++;
@@ -61,6 +59,8 @@ public class PilaLenta implements IPila{
             notifyAll();
         }
         else{
+            canvas.avisa("Error, la pila esta llena");
+            Thread.sleep(1000);
             throw new java.lang.Exception("Error, la pila esta llena");
         }   
     }
@@ -85,6 +85,7 @@ public class PilaLenta implements IPila{
         }
         else{
            canvas.avisa("Error, la pila esta vacía");
+           Thread.sleep(1000);
            throw new java.lang.Exception("Error, la pila esta vacía");
         }   
     }

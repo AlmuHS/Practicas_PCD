@@ -31,6 +31,7 @@ public class CanvasPila extends Canvas{
     private String mensaje;
     
     public CanvasPila(int capacidad){
+        this.mensaje = "";
         this.capacidad = capacidad;
         setSize(450, 700);
     }
@@ -69,10 +70,10 @@ public class CanvasPila extends Canvas{
         }
         
         //En caso de error, muestro mensaje
-        else if(mensaje != null || numelementos == capacidad){
+        else if(!mensaje.equals("")){
             Font f1 = new Font("DejaVu Sans", Font.TRUETYPE_FONT + Font.BOLD, 15);
             og.setFont(f1);
-            og.drawString(mensaje, 10, 560);
+            og.drawString(mensaje, 10, 500);
         }
         g.drawImage(offscreen, 0, 0, null);
     }
