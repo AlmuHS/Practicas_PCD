@@ -71,7 +71,7 @@ public class Consumidor implements Runnable{
         } catch (InterruptedException ex) {
             Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("Finaliza el productor " + id);
+        System.out.println("Finaliza el consumidor " + id);
           
     }
     
