@@ -32,7 +32,7 @@ public class CanvasPila extends Canvas{
     
     public CanvasPila(int capacidad){
         this.capacidad = capacidad;
-        setSize(450, 600);
+        setSize(450, 700);
     }
     
     @Override
@@ -55,21 +55,24 @@ public class CanvasPila extends Canvas{
         //Dibujo contenidos de la pila
         if(datos != null){
             for (int i = 0; i < numelementos; i++) {
-                Object dato = datos[i];
-                if(dato != null) og.drawString(dato.toString(), 200, 80 + 40*i);
+                if(datos[i] != null){
+                    Object dato = datos[i];
+                    og.drawString(dato.toString(), 200, 80 + 40*(numelementos - i));
+                }
             }
             
             //Muestro numero de elementos y capacidad actual
             Font f1 = new Font("DejaVu Sans", Font.TRUETYPE_FONT + Font.BOLD, 15);
             og.setFont(f1);
-            og.drawString("Numero de elementos: " + String.valueOf(numelementos), 100, 510);
-            og.drawString("Capacidad: " + String.valueOf(capacidad - numelementos), 100, 530);
+            og.drawString("Numero de elementos: " + String.valueOf(numelementos), 10, 510);
+            og.drawString("Capacidad: " + String.valueOf(capacidad - numelementos), 10, 530);
         }
+        
         //En caso de error, muestro mensaje
         else if(mensaje != null || numelementos == capacidad){
             Font f1 = new Font("DejaVu Sans", Font.TRUETYPE_FONT + Font.BOLD, 15);
             og.setFont(f1);
-            og.drawString(mensaje, 100, 560);
+            og.drawString(mensaje, 10, 560);
         }
         g.drawImage(offscreen, 0, 0, null);
     }

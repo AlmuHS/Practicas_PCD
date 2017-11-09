@@ -26,9 +26,11 @@ import java.awt.Color;
  */
 public class PilaApplet extends Applet {
     
-    private Productor prod; 
-    private Consumidor cons;
-    private Thread tcon; 
+    private Productor[] prod; 
+    private Consumidor[] cons;
+    private Thread[] tcon; 
+    int nprods = 4;
+    int ncons = 1;
     
     /**
      * Initialization method that will be called after the applet is loaded into
@@ -42,25 +44,50 @@ public class PilaApplet extends Applet {
        CanvasPila cp = new CanvasPila(capacidad);
        PilaLenta pila = new PilaLenta(capacidad, cp);
        
-       this.setSize(450, 600);
+       this.setSize(450, 700);
        this.setBackground(Color.red);
        this.add(cp); 
        
-       prod = new Productor(pila);
-       cons = new Consumidor(pila);
-       tcon = new Thread(cons);  
+       prod = new Productor[nprods];
+       
+       for (int i = 0; i < nprods; i++) {
+           prod[i] = new Productor(pila, i);
+       }
+       
+       cons = new Consumidor[ncons];
+       tcon = new Thread[ncons];
+       
+       for (int i = 0; i < ncons; i++) {
+           cons[i] = new Consumidor(pila, i);
+           tcon[i] = new Thread(cons[i]);
+       }
+       
     }
     
     @Override
-    public void start(){ 
-        prod.start();
-        tcon.start();
+    public void start(){
+        
+        for (Productor prod1 : prod) {
+            prod1.start();
+        }
+        
+        for (Thread tcon1 : tcon) {
+            tcon1.start();           
+        }
+        
     }
     
     @Override
     public void stop(){
-        prod.interrupt();
-        tcon.interrupt();
+        
+        for (Productor prod1 : prod) {
+            prod1.interrupt();
+        }
+        
+        for (Thread tcon1 : tcon) {
+            tcon1.interrupt();
+        }
+        
     }
 
 }

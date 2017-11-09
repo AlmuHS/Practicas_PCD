@@ -16,7 +16,6 @@
  */
 package practica4;
 
-import static java.lang.Math.abs;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,9 +26,11 @@ import java.util.logging.Logger;
  */
 public class Productor extends Thread{
     private PilaLenta lapila;
+    private int id;
     
-    public Productor(PilaLenta pila){
+    public Productor(PilaLenta pila, int id){
         lapila = pila;
+        this.id = id;
     }
     
     void producir(){
@@ -38,12 +39,13 @@ public class Productor extends Thread{
         try {
             
             for (int i = 0; i < 15; i++) { 
-                int num = randnum.nextInt()%20;
-                System.out.println("Soy productor e inserto el valor " + num);
+                int num = randnum.nextInt(20);
+                System.out.println("Soy el productor " + this.id + " e inserto el valor " + num);
                 lapila.Apila(num);
 
-                Thread.sleep(abs(randnum.nextInt() % 3000 + 1000));
+                Thread.sleep(randnum.nextInt(3000) + 1000);
             }
+            System.out.println("Fin productor " + this.id);
             
         } catch (Exception ex) {
                 Logger.getLogger(Productor.class.getName()).log(Level.SEVERE, null, ex);

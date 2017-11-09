@@ -16,7 +16,6 @@
  */
 package practica4;
 
-import static java.lang.Math.abs;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,32 +26,56 @@ import java.util.logging.Logger;
  */
 public class Consumidor implements Runnable{
     private PilaLenta lapila;
+    private int id;
     
-    public Consumidor(PilaLenta pila){
+    public Consumidor(PilaLenta pila, int id){
         lapila = pila;
+        this.id = id;
     }
     
     void consumir(){
         Random randnum = new Random();
         int valor;
-        for (int i = 0; i < 15; i++) {
-            
+        
+        for (int i = 0; i < 15; i++) {   
             try {
                 valor = (int) lapila.Desapila();
-                System.out.println("Soy consumidor y extraigo el valor " + valor);
-                Thread.sleep(abs(randnum.nextInt() % 3000 + 1000));
+                System.out.println("Soy el consumidor " + this.id + " y extraigo el valor " + valor);
+                Thread.sleep(randnum.nextInt(3000) + 1000);
             } catch (Exception ex) {
                 Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
         }//Fin for
         
+        try {
+            Thread.sleep(2000);
+            synchronized(this.lapila){
+                lapila.notifyAll();
+            }
+        
+            Thread.sleep(1500);
+            synchronized(this.lapila){
+                lapila.notifyAll();
+            }
+
+            Thread.sleep(2500);
+            synchronized(this.lapila){
+                lapila.notifyAll();
+            }
+            
+            
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          
     }
+    
     
     @Override
     public void run(){
         consumir();
     }
+    
     
 }
     
