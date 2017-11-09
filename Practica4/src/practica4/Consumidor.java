@@ -38,15 +38,19 @@ public class Consumidor implements Runnable{
         //randnum.setSeed(id);
         int valor;
         
-        for (int i = 0; i < 15; i++) {   
-            try {
+        try {
+            for (int i = 0; i < 15; i++) {   
+
                 valor = (int) lapila.Desapila();
                 System.out.println("Soy el consumidor " + this.id + " y extraigo el valor " + valor);
                 Thread.sleep(randnum.nextInt(3000) + 1000);
-            } catch (Exception ex) {
+
+            }//Fin for
+        
+        } catch (Exception ex) {
                 Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }//Fin for
+        }
+        
         System.out.println("Consumidor " + id + " termina de desapilar");
         
         try {
