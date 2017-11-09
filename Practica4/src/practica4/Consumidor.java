@@ -35,6 +35,7 @@ public class Consumidor implements Runnable{
     
     void consumir(){
         Random randnum = new Random();
+        //randnum.setSeed(id);
         int valor;
         
         for (int i = 0; i < 15; i++) {   
@@ -46,6 +47,7 @@ public class Consumidor implements Runnable{
                 Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }//Fin for
+        System.out.println("Consumidor " + id + "termina de desapilar");
         
         try {
             Thread.sleep(2000);
@@ -61,12 +63,11 @@ public class Consumidor implements Runnable{
             Thread.sleep(2500);
             synchronized(this.lapila){
                 lapila.notifyAll();
-            }
-            
-            
+            } 
         } catch (InterruptedException ex) {
             Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("Finaliza el productor " + id);
           
     }
     

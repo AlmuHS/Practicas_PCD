@@ -35,6 +35,7 @@ public class Productor extends Thread{
     
     void producir(){
         Random randnum = new Random();
+        //randnum.setSeed(id);
         
         try {
             
