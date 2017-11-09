@@ -74,7 +74,7 @@ public class PilaLenta implements IPila{
             intentos++;
         }
         
-        if(!pilallena()){
+        if(!pilavacia()){
             Object primero = datos[cima - 1];
             cima--;
             numelementos--;
