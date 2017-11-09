@@ -50,7 +50,7 @@ public class CanvasPila extends Canvas{
         
         //Dibujo cuadrados
         for (int i = 0; i < capacidad; i++) {
-            og.drawRect(200, 85 + 40 * (i-1), 80, 80);
+            og.drawRect(300, 85 + 40 * (i-1), 80, 80);
         }
         
         //Dibujo contenidos de la pila
@@ -58,7 +58,7 @@ public class CanvasPila extends Canvas{
             for (int i = 0; i < numelementos; i++) {
                 if(datos[i] != null){
                     Object dato = datos[i];
-                    og.drawString(dato.toString(), 200, 80 + 40*(numelementos - i));
+                    og.drawString(dato.toString(), 300, 80 + 40*(numelementos - i));
                 }
             }
             
