@@ -47,7 +47,7 @@ public class Consumidor implements Runnable{
                 Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }//Fin for
-        System.out.println("Consumidor " + id + "termina de desapilar");
+        System.out.println("Consumidor " + id + " termina de desapilar");
         
         try {
             Thread.sleep(2000);

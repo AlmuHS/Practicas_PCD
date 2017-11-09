@@ -79,6 +79,7 @@ public class PilaLenta implements IPila{
             cima--;
             numelementos--;
             canvas.representa(datos, cima, numelementos);
+            notifyAll();
             
             return primero;
         }
