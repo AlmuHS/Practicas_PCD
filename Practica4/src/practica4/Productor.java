@@ -53,27 +53,6 @@ public class Productor extends Thread{
         }//Fin try-catch
         System.out.println("Fin productor " + this.id);
         
-        
-        /*try {
-            Thread.sleep(2000);
-            synchronized(this.lapila){
-                lapila.notifyAll();
-            }
-        
-            Thread.sleep(1500);
-            synchronized(this.lapila){
-                lapila.notifyAll();
-            }
-
-            Thread.sleep(2500);
-            synchronized(this.lapila){
-                lapila.notifyAll();
-            } 
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-        System.out.println("Termina productor " + id);
-        
     }
     
     @Override
