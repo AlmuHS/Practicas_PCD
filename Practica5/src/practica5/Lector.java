@@ -30,8 +30,10 @@ public class Lector extends Thread{
                 Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        System.out.println("Soy lector");
         comp.numlectores++;
+        
+        //Seccion crítica
+        System.out.println("Soy lector");
         
         
         //Protocolo salida

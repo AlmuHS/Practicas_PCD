@@ -29,8 +29,11 @@ public class Escritor extends Thread{
                 Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        System.out.println("Soy escritor");
         comp.hayescritor = true;
+        
+        //Sección crítica
+        System.out.println("Soy escritor");
+        
         
         //Protocolo de salida
         comp.hayescritor = false;
