@@ -54,20 +54,20 @@ public class Consumidor implements Runnable{
         System.out.println("Consumidor " + id + " termina de desapilar");
         
         try {
-            Thread.sleep(2000);
+            Thread.sleep(4000);
             synchronized(this.lapila){
                 lapila.notifyAll();
             }
         
-            Thread.sleep(1500);
+            Thread.sleep(1000);
             synchronized(this.lapila){
                 lapila.notifyAll();
             }
 
-            Thread.sleep(2500);
+            Thread.sleep(1000);
             synchronized(this.lapila){
                 lapila.notifyAll();
-            } 
+            }
         } catch (InterruptedException ex) {
             Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
         }
