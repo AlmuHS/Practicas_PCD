@@ -6,6 +6,7 @@
 package practica5;
 
 import java.applet.Applet;
+import java.awt.Color;
 
 /**
  *
@@ -19,6 +20,11 @@ public class MiApplet extends Applet {
      */
     public void init() {
         // TODO start asynchronous download of heavy resources
+        int capacidad = 15; 
+        
+       this.setSize(450, 700);
+       this.setBackground(Color.red);
+       //this.add(cp); 
     }
 
     // TODO overwrite start(), stop() and destroy() methods

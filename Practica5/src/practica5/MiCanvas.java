@@ -6,11 +6,32 @@
 package practica5;
 
 import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
 
 /**
  *
  * @author almu
  */
-public class MiCanvas extends Canvas{
-    
+public class MiCanvas extends Canvas {
+
+    @Override
+    public void paint(Graphics g) {
+
+        this.setBackground(Color.lightGray);
+
+        Image offscreen = createImage(this.getWidth(), this.getHeight()); // parpadeo
+        Graphics og = offscreen.getGraphics();// parpadeo
+
+        og.setColor(Color.red);
+
+        g.drawImage(offscreen, 0, 0, null);
+    }
+
+    @Override
+    public void update(Graphics g) {
+        paint(g);
+    }
+
 }
