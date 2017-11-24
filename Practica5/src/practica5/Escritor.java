@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author almu
  */
-public class Escritor extends Thread{
+public class Escritor implements Runnable{
     private Compartido comp;
     
     public Escritor(Compartido comp){

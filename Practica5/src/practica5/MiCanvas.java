@@ -16,14 +16,22 @@ import java.awt.Image;
  */
 public class MiCanvas extends Canvas {
 
+    
+    public MiCanvas(){
+        this.setSize(450, 700);
+    }
+    
     @Override
     public void paint(Graphics g) {
 
-        this.setBackground(Color.lightGray);
+        this.setBackground(Color.GREEN);
 
         Image offscreen = createImage(this.getWidth(), this.getHeight()); // parpadeo
         Graphics og = offscreen.getGraphics();// parpadeo
-
+        
+        og.setColor(Color.ORANGE);
+        og.fillOval(20, 20, 20, 20);
+        
         og.setColor(Color.red);
 
         g.drawImage(offscreen, 0, 0, null);
