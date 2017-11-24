@@ -35,7 +35,7 @@ public class MiApplet extends Applet {
        tescritores = new Thread[nescritores];
        
        //Creamos el objeto compartido
-       Compartido comp = new Compartido(nlectores);
+       Compartido comp = new Compartido();
        
        //Creamos el canvas
        cv = new MiCanvas();

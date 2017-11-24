@@ -11,10 +11,5 @@ package practica5;
  */
 public class Compartido {
     public int numlectores = 0;
-    public boolean hayescritor = false;
-    
-    public Compartido(int numlectores){
-        this.numlectores = numlectores;
-    }
-   
+    public boolean hayescritor = false;   
 }

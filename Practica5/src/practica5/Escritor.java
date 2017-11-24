@@ -22,13 +22,13 @@ public class Escritor implements Runnable{
     public synchronized void run(){
         
         //Protocolo de entrada
-        if(comp.hayescritor || (comp.numlectores > 0)){
+        if(comp.hayescritor || (comp.numlectores > 0))
             try {
                 wait();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        
         comp.hayescritor = true;
         
         //Sección crítica
