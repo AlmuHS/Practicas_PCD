@@ -14,9 +14,13 @@ import java.util.logging.Logger;
  */
 public class Lector extends Thread{
     private Compartido comp;
+    private int id;
+    private MiCanvas cv;
     
-    public Lector(Compartido comp){
+    public Lector(Compartido comp, int id, MiCanvas cv){
         this.comp = comp;
+        this.id = id;
+        this.cv = cv;
     }
     
     @Override
@@ -34,10 +38,19 @@ public class Lector extends Thread{
         
         //Seccion crítica
         System.out.println("Soy lector");
+        cv.avisaSC(0, id, 1);
+        
+        try {
+            sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
         
         //Protocolo salida
         comp.numlectores--;
+        cv.avisaSC(0, id, 0);
         if(comp.numlectores == 0) notifyAll();
         
     }

@@ -38,7 +38,7 @@ public class MiApplet extends Applet {
        Compartido comp = new Compartido();
        
        //Creamos el canvas
-       cv = new MiCanvas();
+       cv = new MiCanvas(nlectores, nescritores);
        
        //Inicializamos el Applet
        this.setSize(450, 700);
@@ -49,12 +49,12 @@ public class MiApplet extends Applet {
        
        //Inicializamos lectores y escritores
        for(int i = 0; i < nescritores; i++){
-           escritores[i] = new Escritor(comp);
+           escritores[i] = new Escritor(comp, i, cv);
            tescritores[i] = new Thread(escritores[i]);
        }
        
        for(int j = 0; j < nlectores; j++){
-           lectores[j] = new Lector(comp);
+           lectores[j] = new Lector(comp, j, cv);
        }
     }
     
@@ -69,6 +69,18 @@ public class MiApplet extends Applet {
        
        for(int i = 0; i < nlectores; i++){
            lectores[i].start();
+       } 
+    }
+    
+    @Override
+    public void stop(){
+        //Lanzamos los hilos lectores y escritores
+       for(int i = 0; i < nescritores; i++){
+           tescritores[i].interrupt();
+       }
+       
+       for(int i = 0; i < nlectores; i++){
+           lectores[i].interrupt();
        } 
     }
 
