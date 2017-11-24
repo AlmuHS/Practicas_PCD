@@ -23,7 +23,7 @@ public class Lector extends Thread{
     public synchronized void run(){
         
         //Protocolo entrada
-        if(comp.hayescritor){
+        while(comp.hayescritor){
             try {
                 wait();
             } catch (InterruptedException ex) {
