@@ -37,7 +37,7 @@ public class MiCanvas extends Canvas {
     Boolean[] escritoractivo;
     
     public MiCanvas(int numlectores, int numescritores){
-        this.setSize(450, 300); //Tamano del canvas
+        this.setSize(500, 300); //Tamano del canvas
         this.numlectores = numlectores; //Numero de lectores
         this.numescritores = numescritores; //Numero de escritores
         
@@ -77,37 +77,37 @@ public class MiCanvas extends Canvas {
         for(int i = 0; i < numlectores; i++){
             if(lectoractivo[i]){
                 og.setColor(Color.ORANGE);
-                og.fillOval(100 + 50 * i, poslectores[i], 40, 40);
+                og.fillOval(50 + 50 * i, poslectores[i], 40, 40);
                 og.setColor(Color.RED);
-               og.drawString(String.valueOf(i), 115 + 50*i, poslectores[i] + 25);
+               og.drawString(String.valueOf(i), 65 + 50*i, poslectores[i] + 25);
             }
         }
         
         //Linea de separacion de seccion critica
         og.setColor(Color.RED);
-        og.drawLine(100, 115, 300, 115);
+        og.drawLine(50, 115, 350, 115);
         
         //Letrero de lectores
         og.setColor(Color.ORANGE);
-        og.drawString("Lectores", 320, 40);
+        og.drawString("Lectores", 370, 40);
         
         
         //Pintamos los escritores
         for(int i = 0; i < numescritores; i++){
             if(escritoractivo[i]){
                og.setColor(Color.BLUE);
-               og.fillOval(100 + 50*i, posescritores[i], 40, 40);
+               og.fillOval(50 + 50*i, posescritores[i], 40, 40);
                og.setColor(Color.CYAN);
-               og.drawString(String.valueOf(i), 115 + 50*i, posescritores[i] + 25);
+               og.drawString(String.valueOf(i), 65 + 50*i, posescritores[i] + 25);
             }
         }
         
         //Letrero de escritores
         og.setColor(Color.BLUE);
-        og.drawString("Escritores", 320, 90);
+        og.drawString("Escritores", 370, 90);
         
         og.setColor(Color.RED);
-        og.drawString("Seccion critica", 300, 180);
+        og.drawString("Seccion critica", 370, 180);
         
         //Dibujamos la imagen
         g.drawImage(offscreen, 0, 0, null);

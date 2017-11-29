@@ -40,7 +40,7 @@ public class MiApplet extends Applet {
         
        //Indicamos numero de lectores y escritores
        nescritores = 4;
-       nlectores = 2;
+       nlectores = 3;
        
        //Creamos los arrays de lectores y escritores
        escritores = new Escritor[nescritores];
@@ -54,7 +54,7 @@ public class MiApplet extends Applet {
        cv = new MiCanvas(nlectores, nescritores);
        
        //Inicializamos el Applet
-       this.setSize(450, 300);
+       this.setSize(500, 300);
        this.setBackground(Color.red);
        
        //Añadimos el canvas
