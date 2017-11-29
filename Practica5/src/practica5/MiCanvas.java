@@ -105,18 +105,22 @@ public class MiCanvas extends Canvas {
 
     public void llegaEscritor(int id){
         this.escritoractivo[id] = true;
+        repaint();
     }
     
     public void saleEscritor(int id){
         this.escritoractivo[id] = false;
+        repaint();
     }
     
     public void llegaLector(int id){
         this.lectoractivo[id] = true;
+        repaint();
     }
     
     public void saleLector(int id){
         this.lectoractivo[id] = false;
+        repaint();
     }
     
     public void avisaSC(int tipo, int id, int entra){
