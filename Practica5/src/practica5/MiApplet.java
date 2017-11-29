@@ -41,7 +41,7 @@ public class MiApplet extends Applet {
        cv = new MiCanvas(nlectores, nescritores);
        
        //Inicializamos el Applet
-       this.setSize(450, 700);
+       this.setSize(450, 300);
        this.setBackground(Color.red);
        
        //Añadimos el canvas

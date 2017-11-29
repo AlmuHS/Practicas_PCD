@@ -27,30 +27,26 @@ public class Escritor implements Runnable {
 
     public synchronized void run() {
 
-        //Protocolo de entrada
-        while (comp.hayescritor || (comp.numlectores > 0)) {
-            try {
-                wait();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            //Protocolo de entrada
+            comp.EntradaEscritor();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        comp.hayescritor = true;
-
+        
         //Sección crítica
         System.out.println("Soy escritor");
         cv.avisaSC(1, id, 1);
 
         try {
-            sleep(1000);
+            Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //Protocolo de salida
-        comp.hayescritor = false;
         cv.avisaSC(1, id, 0);
-        notifyAll();
+        comp.SalidaEscritor();
     }
 }

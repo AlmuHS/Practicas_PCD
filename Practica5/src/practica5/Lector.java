@@ -26,32 +26,28 @@ public class Lector extends Thread{
     @Override
     public synchronized void run(){
         
-        //Protocolo entrada
-        while(comp.hayescritor){
-            try {
-                wait();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
-            }
+         //Protocolo entrada
+        try {
+            comp.EntradaLector();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
         }
-        comp.numlectores++;
+        
         
         //Seccion crítica
         System.out.println("Soy lector");
         cv.avisaSC(0, id, 1);
         
         try {
-            sleep(1000);
+            Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
-        
         //Protocolo salida
-        comp.numlectores--;
+        comp.SalidaLector();
         cv.avisaSC(0, id, 0);
-        if(comp.numlectores == 0) notifyAll();
         
     }
     

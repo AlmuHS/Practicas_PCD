@@ -22,7 +22,7 @@ public class MiCanvas extends Canvas {
     int[] posescritores;
     
     public MiCanvas(int numlectores, int numescritores){
-        this.setSize(450, 700); //Tamano del canvas
+        this.setSize(450, 300); //Tamano del canvas
         this.numlectores = numlectores; //Numero de lectores
         this.numescritores = numescritores; //Numero de escritores
         
