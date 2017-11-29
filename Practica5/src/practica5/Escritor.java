@@ -29,14 +29,14 @@ public class Escritor implements Runnable {
 
         try {
             //Protocolo de entrada
-            comp.EntradaEscritor();
+            comp.EntradaEscritor(id);
         } catch (InterruptedException ex) {
             Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         
         //Sección crítica
-        System.out.println("Soy escritor");
+        System.out.println("Escritor " + id + " entrando en Seccion Critica");
         cv.avisaSC(1, id, 1);
 
         try {
@@ -46,7 +46,9 @@ public class Escritor implements Runnable {
         }
 
         //Protocolo de salida
-        cv.avisaSC(1, id, 0);
         comp.SalidaEscritor();
+        cv.avisaSC(1, id, 0);
+        System.out.println("Escritor " + id + " saliendo");
+        
     }
 }

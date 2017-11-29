@@ -13,9 +13,9 @@ public class Compartido {
     private int numlectores = 0;
     private boolean hayescritor = false;
     
-    public synchronized void EntradaLector() throws InterruptedException{
+    public synchronized void EntradaLector(int id) throws InterruptedException{
         while(hayescritor){
-            System.out.println(Thread.currentThread().getName()+" voy a Esperar siendo un lector");
+            System.out.println("Lector " + id + " esperando");
             wait();
         }     
         numlectores++;
@@ -26,8 +26,9 @@ public class Compartido {
         if(numlectores == 0) notifyAll();
     }
     
-    public synchronized void EntradaEscritor() throws InterruptedException{
+    public synchronized void EntradaEscritor(int id) throws InterruptedException{
         while (hayescritor || (numlectores > 0)) {
+            System.out.println("Escritor " + id + " esperando");
             wait();
         }
         hayescritor = true;

@@ -28,14 +28,14 @@ public class Lector extends Thread{
         
          //Protocolo entrada
         try {
-            comp.EntradaLector();
+            comp.EntradaLector(id);
         } catch (InterruptedException ex) {
             Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
         //Seccion crítica
-        System.out.println("Soy lector");
+        System.out.println("Lector " + id + " entrando en Seccion Critica");
         cv.avisaSC(0, id, 1);
         
         try {
@@ -47,6 +47,7 @@ public class Lector extends Thread{
         
         //Protocolo salida
         comp.SalidaLector();
+        System.out.println("Lector " + id + " saliendo");
         cv.avisaSC(0, id, 0);
         
     }
