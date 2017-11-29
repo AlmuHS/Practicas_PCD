@@ -23,6 +23,7 @@ public class MiApplet extends Applet {
     int nlectores; //numero de lectores
     
     
+    @Override
     public void init() {
         
        //Indicamos numero de lectores y escritores

@@ -29,9 +29,12 @@ public class Lector extends Thread{
          //Protocolo entrada
         try {
             comp.EntradaLector(id);
+            cv.llegaLector(id);
+            Thread.sleep(500);
         } catch (InterruptedException ex) {
             Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         
         
         //Seccion crítica
@@ -49,6 +52,13 @@ public class Lector extends Thread{
         comp.SalidaLector();
         System.out.println("Lector " + id + " saliendo");
         cv.avisaSC(0, id, 0);
+        
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cv.saleLector(id);
         
     }
     

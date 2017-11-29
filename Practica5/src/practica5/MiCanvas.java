@@ -7,6 +7,7 @@ package practica5;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -20,6 +21,8 @@ public class MiCanvas extends Canvas {
     
     int[] poslectores;
     int[] posescritores;
+    Boolean[] lectoractivo;
+    Boolean[] escritoractivo;
     
     public MiCanvas(int numlectores, int numescritores){
         this.setSize(450, 300); //Tamano del canvas
@@ -29,14 +32,19 @@ public class MiCanvas extends Canvas {
         poslectores = new int[numlectores]; //Posiciones y de los lectores
         posescritores = new int [numescritores]; //Posicion y de los escritores
         
+        lectoractivo = new Boolean[numlectores];//indicador de lector activo
+        escritoractivo = new Boolean[numescritores];//indicador de escritor activo
+        
         //La posicion y inicial de los lectores es 20
         for(int i = 0; i < numlectores; i++){
-            poslectores[i] = 20; 
+            poslectores[i] = 20;
+            lectoractivo[i] = false;
         }
         
         //La posicion y inicial de los escritores es 50
         for(int i = 0; i < numescritores; i++){
-            posescritores[i] = 50;
+            posescritores[i] = 70;
+            escritoractivo[i] = false;
         }
     }
     
@@ -50,17 +58,41 @@ public class MiCanvas extends Canvas {
         Image offscreen = createImage(this.getWidth(), this.getHeight()); // parpadeo
         Graphics og = offscreen.getGraphics();// parpadeo
         
+        Font f = new Font("DejaVu Sans", Font.TRUETYPE_FONT + Font.BOLD + Font.PLAIN, 14);
+        og.setFont(f);
+        
         //Pintamos los lectores
         for(int i = 0; i < numlectores; i++){
-            og.setColor(Color.ORANGE);
-            og.fillOval(20 + 30 * i, poslectores[i], 20, 20);
+            if(lectoractivo[i]){
+                og.setColor(Color.ORANGE);
+                og.fillOval(100 + 50 * i, poslectores[i], 40, 40);
+                og.setColor(Color.RED);
+               og.drawString(String.valueOf(i), 115 + 50*i, poslectores[i] + 25);
+            }
         }
+        
+        og.setColor(Color.RED);
+        og.drawLine(100, 115, 300, 115);
+        
+        //Letrero de lectores
+        og.setColor(Color.ORANGE);
+        og.drawString("Lectores", 320, 40);
+        
         
         //Pintamos los escritores
         for(int i = 0; i < numescritores; i++){
-            og.setColor(Color.BLUE);
-            og.fillOval(20 + 30*i, posescritores[i], 20, 20);
+            if(escritoractivo[i]){
+               og.setColor(Color.BLUE);
+               og.fillOval(100 + 50*i, posescritores[i], 40, 40);
+               og.setColor(Color.CYAN);
+               og.drawString(String.valueOf(i), 115 + 50*i, posescritores[i] + 25);
+            }
         }
+        
+        //Letrero de escritores
+        og.setColor(Color.BLUE);
+        og.drawString("Escritores", 320, 90);
+        
         
         //Dibujamos la imagen
         g.drawImage(offscreen, 0, 0, null);
@@ -71,25 +103,41 @@ public class MiCanvas extends Canvas {
         paint(g);
     }
 
+    public void llegaEscritor(int id){
+        this.escritoractivo[id] = true;
+    }
+    
+    public void saleEscritor(int id){
+        this.escritoractivo[id] = false;
+    }
+    
+    public void llegaLector(int id){
+        this.lectoractivo[id] = true;
+    }
+    
+    public void saleLector(int id){
+        this.lectoractivo[id] = false;
+    }
+    
     public void avisaSC(int tipo, int id, int entra){
         
         //Si es un lector
         if(tipo == 0){
             //Si entra en la seccion critica, incrementa su posicion
-            if(entra == 1) poslectores[id] += 70; 
+            if(entra == 1) poslectores[id] += 110; 
             
             //Si sale de la seccion critica, devuelvelo a su posicion original
-            else poslectores[id] -= 70;
+            else poslectores[id] -= 110;
         }
         
         //Si es un escritor
         else if(tipo == 1){
             
             //Si entra en la seccion critica, incrementa su posicion
-            if(entra == 1) posescritores[id] += 40;
+            if(entra == 1) posescritores[id] += 80;
             
             //Si sale de la seccion critica, devuelvelo a su posicion original
-            else posescritores[id] -= 40;
+            else posescritores[id] -= 80;
         }
         
         repaint();

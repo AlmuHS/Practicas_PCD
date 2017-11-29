@@ -30,10 +30,11 @@ public class Escritor implements Runnable {
         try {
             //Protocolo de entrada
             comp.EntradaEscritor(id);
+            cv.llegaEscritor(id);
+            Thread.sleep(500);
         } catch (InterruptedException ex) {
             Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         
         //Sección crítica
         System.out.println("Escritor " + id + " entrando en Seccion Critica");
@@ -47,8 +48,15 @@ public class Escritor implements Runnable {
 
         //Protocolo de salida
         comp.SalidaEscritor();
-        cv.avisaSC(1, id, 0);
         System.out.println("Escritor " + id + " saliendo");
+        cv.avisaSC(1, id, 0);
+         
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cv.saleEscritor(id);
         
     }
 }
