@@ -87,7 +87,7 @@ public class MiApplet extends Applet {
     
     @Override
     public void stop(){
-        //Lanzamos los hilos lectores y escritores
+        //Paramos todos los hilos
        for(int i = 0; i < nescritores; i++){
            tescritores[i].interrupt();
        }
