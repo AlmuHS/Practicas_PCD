@@ -37,7 +37,7 @@ public class MiCanvas extends Canvas {
     Boolean[] escritoractivo;
     
     public MiCanvas(int numlectores, int numescritores){
-        this.setSize(500, 300); //Tamano del canvas
+        this.setSize(500, 350); //Tamano del canvas
         this.numlectores = numlectores; //Numero de lectores
         this.numescritores = numescritores; //Numero de escritores
         
@@ -106,8 +106,17 @@ public class MiCanvas extends Canvas {
         og.setColor(Color.BLUE);
         og.drawString("Escritores", 370, 90);
         
+        //Letrero de seccion critica
         og.setColor(Color.RED);
         og.drawString("Seccion critica", 370, 180);
+        
+        
+        og.setColor(Color.MAGENTA);
+        og.drawLine(50, 200, 350, 200);
+        
+        //Letrero de finalizados
+        og.setColor(Color.MAGENTA);
+        og.drawString("Finalizados", 370, 250);
         
         //Dibujamos la imagen
         g.drawImage(offscreen, 0, 0, null);
@@ -124,7 +133,8 @@ public class MiCanvas extends Canvas {
     }
     
     public void saleEscritor(int id){
-        this.escritoractivo[id] = false;
+        posescritores[id] += 190;
+        
         repaint();
     }
     
@@ -134,7 +144,7 @@ public class MiCanvas extends Canvas {
     }
     
     public void saleLector(int id){
-        this.lectoractivo[id] = false;
+        poslectores[id] += 190;
         repaint();
     }
     
