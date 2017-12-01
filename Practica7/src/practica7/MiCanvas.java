@@ -35,6 +35,7 @@ public class MiCanvas extends Canvas {
     int[] posescritores;
     Boolean[] lectoractivo;
     Boolean[] escritoractivo;
+    Boolean[] lectorescritor;
     
     public MiCanvas(int numlectores, int numescritores){
         this.setSize(500, 350); //Tamano del canvas
@@ -46,11 +47,13 @@ public class MiCanvas extends Canvas {
         
         lectoractivo = new Boolean[numlectores];//indicador de lector activo
         escritoractivo = new Boolean[numescritores];//indicador de escritor activo
+        lectorescritor = new Boolean[numlectores];
         
         //La posicion y inicial de los lectores es 20
         for(int i = 0; i < numlectores; i++){
             poslectores[i] = 20;
             lectoractivo[i] = false;
+            lectorescritor[i] = false;
         }
         
         //La posicion y inicial de los escritores es 50
@@ -78,6 +81,10 @@ public class MiCanvas extends Canvas {
             if(lectoractivo[i]){
                 og.setColor(Color.ORANGE);
                 og.fillOval(50 + 50 * i, poslectores[i], 40, 40);
+                if(lectorescritor[i]){
+                    og.setColor(Color.BLUE);
+                    og.fillOval(50 + 50 * i, poslectores[i], 30, 30);
+                }
                 og.setColor(Color.RED);
                og.drawString(String.valueOf(i), 65 + 50*i, poslectores[i] + 25);
             }
@@ -139,24 +146,40 @@ public class MiCanvas extends Canvas {
     
     public void avisaSC(int tipo, int id, int entra){
         
-        //Si es un lector
-        if(tipo == 0){
-            //Si entra en la seccion critica, incrementa su posicion
-            if(entra == 1) poslectores[id] += 110; 
-            
-            //Si sale de la seccion critica, muestralo en la zona de finalizados
-            else poslectores[id] += 80;
+       
+        switch (tipo) {
+             //Si es un lector
+            case 0:
+                //Si entra en la seccion critica, muestralo en el area central
+                lectorescritor[id] = false;
+                if(entra == 1) poslectores[id] += 110;
+                
+                //Si sale de la seccion critica, muestralo en la zona de finalizados
+                else poslectores[id] += 80;
+                break;
+                
+            //Si es un escritor
+            case 1:
+                //Si entra en la seccion critica, muestralo en el area central
+                if(entra == 1) posescritores[id] += 80;
+                
+                //Si sale de la seccion critica, muestralo en la zona de finalizados
+                else posescritores[id] += 110;
+                break;
+                
+            //Si es un lector transformado a escritor
+            case 2:
+                 //Si entra en la seccion critica, incrementa su posicion
+                lectorescritor[id] = true;
+                if(entra == 1) poslectores[id] += 110;
+                //Si sale de la seccion critica, muestralo en la zona de finalizados
+                else poslectores[id] += 80;
+                break;
+                
+            default:
+                break;
         }
         
-        //Si es un escritor
-        else if(tipo == 1){
-            
-            //Si entra en la seccion critica, muestralo en la zona de finalizados
-            if(entra == 1) posescritores[id] += 80;
-            
-            //Si sale de la seccion critica, devuelvelo a su posicion original
-            else posescritores[id] += 110;
-        }
         
         repaint();
     }

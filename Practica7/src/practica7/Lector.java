@@ -30,30 +30,31 @@ public class Lector extends Thread{
     private int id;
     private MiCanvas cv;
     ReentrantReadWriteLock RWLock;
+    private int tiempo;
     
     
     public Lector(ReentrantReadWriteLock RWLock, int id, MiCanvas cv){
         this.id = id;
         this.cv = cv;
         this.RWLock = RWLock;
+        tiempo = 5000;
     }
     
     @Override
     public void run(){
-        Random rand = new Random();
+        Random rand = new Random(1500);
+        
         
         try {
             //Protocolo entrada
             cv.llegaLector(id);
             RWLock.readLock().lock();
-            Thread.sleep(125);
+            Thread.sleep(tiempo/4);
             
             if(rand.nextInt()%4 == 1){
-                
+                CambioEscritor();
             }
-            Thread.sleep(375);
-            
-            
+            Thread.sleep(tiempo*3/4);
             
             //Seccion crítica
             System.out.println("Lector " + id + " entrando en Seccion Critica");
@@ -75,6 +76,19 @@ public class Lector extends Thread{
     }
     
     public void CambioEscritor(){
+        try {
+            System.out.println("Lector " + id + "tranformado en escritor");
+            RWLock.writeLock().lock();
+            System.out.println("Lector " + id + ", actuando como escritor, entrando en seccion critica");
+            cv.avisaSC(2, id, 1);
+            Thread.sleep(tiempo/4);
+            
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            RWLock.writeLock().unlock();
+        }
         
     }
     
