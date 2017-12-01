@@ -17,6 +17,7 @@
 
 package practica7;
 
+import static java.lang.Math.abs;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
@@ -37,13 +38,13 @@ public class Lector extends Thread{
         this.id = id;
         this.cv = cv;
         this.RWLock = RWLock;
-        tiempo = 5000;
+        //tiempo = 5000;
     }
     
     @Override
     public void run(){
         Random rand = new Random(1500);
-        
+        tiempo = abs(rand.nextInt()%1500);
         
         try {
             //Protocolo entrada
@@ -51,10 +52,11 @@ public class Lector extends Thread{
             RWLock.readLock().lock();
             Thread.sleep(tiempo/4);
             
-            if(rand.nextInt()%4 == 1){
+            if(rand.nextInt()%4 == 0){
                 CambioEscritor();
             }
             Thread.sleep(tiempo*3/4);
+            RWLock.readLock().lock();
             
             //Seccion crítica
             System.out.println("Lector " + id + " entrando en Seccion Critica");
@@ -75,9 +77,10 @@ public class Lector extends Thread{
         
     }
     
-    public void CambioEscritor(){
+    private void CambioEscritor(){
         try {
-            System.out.println("Lector " + id + "tranformado en escritor");
+            System.out.println("Lector " + id + " tranformado en escritor");
+            RWLock.readLock().unlock();
             RWLock.writeLock().lock();
             System.out.println("Lector " + id + ", actuando como escritor, entrando en seccion critica");
             cv.avisaSC(2, id, 1);

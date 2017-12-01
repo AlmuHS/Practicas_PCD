@@ -17,6 +17,8 @@
 
 package practica7;
 
+import static java.lang.Math.abs;
+import java.util.Random;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +32,7 @@ public class Escritor implements Runnable {
     private int id;
     private MiCanvas cv;
     ReentrantReadWriteLock RWLock;
+    private int tiempo;
 
     public Escritor(ReentrantReadWriteLock RWLock, int id, MiCanvas cv) {
         this.id = id;
@@ -38,12 +41,14 @@ public class Escritor implements Runnable {
     }
 
     public void run() {
-
+        Random rand = new Random(1500);
+        tiempo = abs(rand.nextInt()%1500);
+        
         try {
             //Protocolo de entrada
             cv.llegaEscritor(id);
             RWLock.writeLock().lock();
-            Thread.sleep(500);
+            Thread.sleep(tiempo);
             
              //Sección crítica
             System.out.println("Escritor " + id + " entrando en Seccion Critica");

@@ -151,8 +151,13 @@ public class MiCanvas extends Canvas {
              //Si es un lector
             case 0:
                 //Si entra en la seccion critica, muestralo en el area central
-                lectorescritor[id] = false;
-                if(entra == 1) poslectores[id] += 110;
+                
+                if(entra == 1 && !lectorescritor[id]) {
+                    poslectores[id] += 110;
+                }
+                else if(lectorescritor[id]){
+                    lectorescritor[id] = false;
+                }
                 
                 //Si sale de la seccion critica, muestralo en la zona de finalizados
                 else poslectores[id] += 80;
@@ -172,8 +177,7 @@ public class MiCanvas extends Canvas {
                  //Si entra en la seccion critica, incrementa su posicion
                 lectorescritor[id] = true;
                 if(entra == 1) poslectores[id] += 110;
-                //Si sale de la seccion critica, muestralo en la zona de finalizados
-                else poslectores[id] += 80;
+               
                 break;
                 
             default:
