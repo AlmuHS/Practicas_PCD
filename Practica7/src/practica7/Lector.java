@@ -17,6 +17,7 @@
 
 package practica7;
 
+import java.util.Random;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,13 +40,20 @@ public class Lector extends Thread{
     
     @Override
     public void run(){
-        
+        Random rand = new Random();
         
         try {
             //Protocolo entrada
             cv.llegaLector(id);
             RWLock.readLock().lock();
-            Thread.sleep(500);
+            Thread.sleep(125);
+            
+            if(rand.nextInt()%4 == 1){
+                
+            }
+            Thread.sleep(375);
+            
+            
             
             //Seccion crítica
             System.out.println("Lector " + id + " entrando en Seccion Critica");
@@ -55,17 +63,18 @@ public class Lector extends Thread{
             //Protocolo salida
             System.out.println("Lector " + id + " saliendo");
             cv.avisaSC(0, id, 0);
-            RWLock.readLock().unlock();
-            Thread.sleep(1000);
              
             
         } catch (InterruptedException ex) {
             Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally{
-            cv.saleLector(id);
-            
+            RWLock.readLock().unlock();
         }
+        
+    }
+    
+    public void CambioEscritor(){
         
     }
     

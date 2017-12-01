@@ -54,13 +54,11 @@ public class Escritor implements Runnable {
             System.out.println("Escritor " + id + " saliendo");
             cv.avisaSC(1, id, 0);
             
-            Thread.sleep(1000);
             
         } catch (InterruptedException ex) {
             Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
-            RWLock.writeLock().unlock();
-            cv.saleEscritor(id);          
+            RWLock.writeLock().unlock();       
         }
        
         

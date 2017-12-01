@@ -132,19 +132,8 @@ public class MiCanvas extends Canvas {
         repaint();
     }
     
-    public void saleEscritor(int id){
-        posescritores[id] += 190;
-        
-        repaint();
-    }
-    
     public void llegaLector(int id){
         this.lectoractivo[id] = true;
-        repaint();
-    }
-    
-    public void saleLector(int id){
-        poslectores[id] += 190;
         repaint();
     }
     
@@ -155,18 +144,18 @@ public class MiCanvas extends Canvas {
             //Si entra en la seccion critica, incrementa su posicion
             if(entra == 1) poslectores[id] += 110; 
             
-            //Si sale de la seccion critica, devuelvelo a su posicion original
-            else poslectores[id] -= 110;
+            //Si sale de la seccion critica, muestralo en la zona de finalizados
+            else poslectores[id] += 80;
         }
         
         //Si es un escritor
         else if(tipo == 1){
             
-            //Si entra en la seccion critica, incrementa su posicion
+            //Si entra en la seccion critica, muestralo en la zona de finalizados
             if(entra == 1) posescritores[id] += 80;
             
             //Si sale de la seccion critica, devuelvelo a su posicion original
-            else posescritores[id] -= 80;
+            else posescritores[id] += 110;
         }
         
         repaint();
