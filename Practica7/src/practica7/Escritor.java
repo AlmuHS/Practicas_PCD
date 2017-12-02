@@ -63,7 +63,7 @@ public class Escritor implements Runnable {
         } catch (InterruptedException ex) {
             Logger.getLogger(Escritor.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
-            RWLock.writeLock().unlock();       
+            RWLock.writeLock().unlock();   
         }
        
         

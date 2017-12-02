@@ -78,12 +78,19 @@ public class MiApplet extends Applet {
     public void start(){
         
        //Lanzamos los hilos lectores y escritores
-       for(int i = 0; i < nlectores; i++){
-           lectores[i].start();
-       }
+       int i = 0;
+       int j = 0;
        
-       for(int i = 0; i < nescritores; i++){
-           tescritores[i].start();
+       while(i < nlectores || j < nescritores){
+           if(i < nlectores){
+               lectores[i].start();
+               i++;
+           }
+           if(j < nescritores){
+               tescritores[j].start();
+               j++;
+           }
+           
        }
        
         

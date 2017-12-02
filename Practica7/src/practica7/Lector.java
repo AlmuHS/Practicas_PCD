@@ -38,13 +38,14 @@ public class Lector extends Thread{
         this.id = id;
         this.cv = cv;
         this.RWLock = RWLock;
-        //tiempo = 5000;
     }
     
     @Override
     public void run(){
         Random rand = new Random(1500);
+        rand.setSeed(System.currentTimeMillis() + id);
         tiempo = abs(rand.nextInt()%1500);
+       
         
         try {
             //Protocolo entrada
@@ -52,11 +53,10 @@ public class Lector extends Thread{
             RWLock.readLock().lock();
             Thread.sleep(tiempo/4);
             
-            if(rand.nextInt()%4 == 0){
+            if(rand.nextInt()%4 == 2){
                 CambioEscritor();
             }
             Thread.sleep(tiempo*3/4);
-            RWLock.readLock().lock();
             
             //Seccion crítica
             System.out.println("Lector " + id + " entrando en Seccion Critica");
@@ -82,6 +82,7 @@ public class Lector extends Thread{
             System.out.println("Lector " + id + " tranformado en escritor");
             RWLock.readLock().unlock();
             RWLock.writeLock().lock();
+            RWLock.readLock().lock();
             System.out.println("Lector " + id + ", actuando como escritor, entrando en seccion critica");
             cv.avisaSC(2, id, 1);
             Thread.sleep(tiempo/4);
@@ -91,6 +92,7 @@ public class Lector extends Thread{
         }
         finally{
             RWLock.writeLock().unlock();
+            //RWLock.readLock().lock();
         }
         
     }
