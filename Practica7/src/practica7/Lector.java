@@ -43,7 +43,7 @@ public class Lector extends Thread{
     @Override
     public void run(){
         Random rand = new Random(1500);
-        rand.setSeed(System.currentTimeMillis() + id);
+        rand.setSeed(System.currentTimeMillis()*id);
         tiempo = abs(rand.nextInt()%1500);
        
         
@@ -53,7 +53,7 @@ public class Lector extends Thread{
             RWLock.readLock().lock();
             Thread.sleep(tiempo/4);
             
-            if(rand.nextInt()%4 == 2){
+            if(rand.nextInt()%4 == 0){
                 CambioEscritor();
             }
             Thread.sleep(tiempo*3/4);
@@ -92,7 +92,6 @@ public class Lector extends Thread{
         }
         finally{
             RWLock.writeLock().unlock();
-            //RWLock.readLock().lock();
         }
         
     }

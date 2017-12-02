@@ -42,7 +42,7 @@ public class MiApplet extends Applet {
         
        //Indicamos numero de lectores y escritores
        nescritores = 4;
-       nlectores = 3;
+       nlectores = 6;
        
        //Creamos los arrays de lectores y escritores
        escritores = new Escritor[nescritores];
