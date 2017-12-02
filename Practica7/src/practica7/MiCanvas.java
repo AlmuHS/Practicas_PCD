@@ -117,7 +117,7 @@ public class MiCanvas extends Canvas {
         og.setColor(Color.RED);
         og.drawString("Seccion critica", 370, 180);
         
-        
+        //Linea de separacion de finalizados
         og.setColor(Color.MAGENTA);
         og.drawLine(50, 200, 350, 200);
         
@@ -144,44 +144,60 @@ public class MiCanvas extends Canvas {
         repaint();
     }
     
+    public void saleEscritor(int id){
+        posescritores[id] = 290;
+        repaint();
+    }
+    
+    public void saleLector(int id){
+        poslectores[id] = 240;
+        repaint();
+    }
+    
     public void avisaSC(int tipo, int id, int entra){
         
        
         switch (tipo) {
+            
              //Si es un lector
             case 0:
-                //Si entra en la seccion critica, muestralo en el area central
-                
-                if(entra == 1 && !lectorescritor[id]) {
-                    poslectores[id] += 110;
+                switch (entra) {
+                    
+                    //Si entra en la sección crítica, muestralo en el area central
+                    case 1:
+                        poslectores[id] = 120;
+                        break;
+                        
+                    //Si sale de la sección crítica, devuelvelo a su posicion inicial
+                    case 0:
+                        poslectores[id] = 20;
+                        break;
                 }
-                else if(lectorescritor[id]){
-                    lectorescritor[id] = false;
-                }
-                
-                //Si sale de la seccion critica, muestralo en la zona de finalizados
-                else poslectores[id] += 80;
-                break;
+                    break;
                 
             //Si es un escritor
             case 1:
-                //Si entra en la seccion critica, muestralo en el area central
-                if(entra == 1) posescritores[id] += 80;
                 
-                //Si sale de la seccion critica, muestralo en la zona de finalizados
-                else posescritores[id] += 110;
+                //Si entra en la seccion critica, muestralo en el area central
+                if(entra == 1) posescritores[id] = 120;
+                
+                //Si sale de la seccion critica, devuelvelo a su posicion inicial
+                else posescritores[id] = 70;
                 break;
                 
             //Si es un lector transformado a escritor
             case 2:
                  //Si entra en la seccion critica, incrementa su posicion
                 lectorescritor[id] = true;
-                if(entra == 1) poslectores[id] += 110;
-               
+                if(entra == 1) poslectores[id] = 120;
+                
+                //Si sale de la seccion critica, muestralo como lector, y devuelvelo a la posicion inicial
+                else{
+                    poslectores[id] = 20;
+                    lectorescritor[id] = false;
+                }
                 break;
                 
-            default:
-                break;
         }
         
         
