@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class AppletParking extends Applet {
     GenThread GT;
     CanvasParking CP;
-    ReentrantLock RL;
+    ReentrantLock[] RLPark; 
 
     /**
      * Initialization method that will be called after the applet is loaded into
@@ -26,8 +26,8 @@ public class AppletParking extends Applet {
     public void init() {
         // TODO start asynchronous download of heavy resources
         CP = new CanvasParking(500, 500);
-        RL = new ReentrantLock();
-        GT = new GenThread(CP, RL);
+        RLPark = new ReentrantLock[4];
+        GT = new GenThread(CP, RLPark);
         
         this.setSize(500, 500);
         this.add(CP);

@@ -14,9 +14,9 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Car implements Runnable{
     private int id;
     private CanvasParking cv;
-    private ReentrantLock RLock;
+    private ReentrantLock[] RLock;
     
-    public Car(int id, CanvasParking cv, ReentrantLock RL){
+    public Car(int id, CanvasParking cv, ReentrantLock[] RL){
         this.id = id;
         this.cv = cv;
         this.RLock = RL;
