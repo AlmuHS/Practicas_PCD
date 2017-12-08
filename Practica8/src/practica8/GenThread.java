@@ -45,7 +45,7 @@ public class GenThread extends Thread{
         }
         
         while (true) {
-            if(rand.nextInt() % 10 < 8){
+            if(rand.nextInt() % 10 < 5){
                 Car c = new Car(id, cv, RL, BusQueue, CarQueue);
                 cars = new Thread(c);
                 cars.start();

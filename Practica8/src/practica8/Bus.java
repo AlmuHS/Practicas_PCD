@@ -32,13 +32,10 @@ public class Bus implements Runnable {
     public void run() {
         cv.inserta(2, id);
         
+        BusQueue.add(id);
         while (!RLock.tryLock()) {
-            /*try {
-                empty.await();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Bus.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
         }
+        BusQueue.remove(id);
         
         try {
             cv.quita(2, id);

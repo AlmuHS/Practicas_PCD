@@ -25,7 +25,7 @@ public class Car implements Runnable {
     private ReentrantLock[] RLock;
     private Queue<Integer> CarQueue;
     private Queue<Integer> BusQueue;
-    
+
     public Car(int id, CanvasParking cv, ReentrantLock[] RL, Queue<Integer> BusQueue, Queue<Integer> CarQueue) {
         this.id = id;
         this.cv = cv;
@@ -38,7 +38,7 @@ public class Car implements Runnable {
     public void run() {
         Random rand = new Random();
         int cola = 1;
-        
+        int i = 0;
 
         try {
             cv.inserta(1, id);
@@ -47,22 +47,22 @@ public class Car implements Runnable {
             Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        if(!CarQueue.isEmpty()){
-           CarQueue.add(id);
-        }
+        CarQueue.add(id);
+        while (CarQueue.size() > 1 && !BusQueue.isEmpty());
         
-        while(CarQueue.size() > 1);
-        CarQueue.remove(id);
-        
-        int i = 0;
         while (!RLock[i].tryLock()) {
-            if (i < RLock.length ) {
+            if (i < RLock.length) {
                 i++;
             } else {
                 i = 0;
             }
         }
+        
+        if(i == 3 && BusQueue.isEmpty()){
+            cola = 2;
+        }
 
+        CarQueue.remove(id);
         try {
             cv.aparcacoche(id, cola);
             cv.quita(cola, id);
@@ -72,8 +72,8 @@ public class Car implements Runnable {
         } catch (InterruptedException ex) {
             Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            
             RLock[i].unlock();
         }
     }
+   
 }
