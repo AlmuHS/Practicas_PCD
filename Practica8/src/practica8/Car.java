@@ -7,6 +7,7 @@ package practica8;
 
 import static java.lang.Math.abs;
 import static java.lang.Thread.sleep;
+import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -22,43 +23,56 @@ public class Car implements Runnable {
     private int id;
     private CanvasParking cv;
     private ReentrantLock[] RLock;
-
-    public Car(int id, CanvasParking cv, ReentrantLock[] RL) {
+    private Queue<Integer> CarQueue;
+    private Queue<Integer> BusQueue;
+    
+    public Car(int id, CanvasParking cv, ReentrantLock[] RL, Queue<Integer> BusQueue, Queue<Integer> CarQueue) {
         this.id = id;
         this.cv = cv;
         this.RLock = RL;
-
+        this.CarQueue = CarQueue;
+        this.BusQueue = BusQueue;
     }
 
     @Override
     public void run() {
         Random rand = new Random();
+        int cola = 1;
         
+
         try {
             cv.inserta(1, id);
             sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        if(!CarQueue.isEmpty()){
+           CarQueue.add(id);
+        }
+        
+        while(CarQueue.size() > 1);
+        CarQueue.remove(id);
         
         int i = 0;
         while (!RLock[i].tryLock()) {
-            if (i < RLock.length - 1) {
+            if (i < RLock.length ) {
                 i++;
+            } else {
+                i = 0;
             }
-            else i = 0;
         }
 
-        
         try {
-            cv.aparcacoche(id, 1);
-            cv.quita(1, id);
+            cv.aparcacoche(id, cola);
+            cv.quita(cola, id);
             sleep(abs(rand.nextInt()) % 5000);
-            
+            cv.salecoche(id, cola);
+
         } catch (InterruptedException ex) {
             Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            cv.salecoche(id, 1);
+            
             RLock[i].unlock();
         }
     }

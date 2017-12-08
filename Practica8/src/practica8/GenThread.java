@@ -22,18 +22,23 @@ public class GenThread extends Thread{
     Thread bus;
     CanvasParking cv;
     ReentrantLock[] RL;
-    Queue<Integer>[] ParkQueue;
+    Queue<Integer> CarQueue;
+    Queue<Integer> BusQueue;
+    Random rand;
     
-    public GenThread(CanvasParking cv, ReentrantLock[] RL, Queue<Integer>[] ParkQueue){
+    
+    public GenThread(CanvasParking cv, ReentrantLock[] RL, Queue<Integer> CarQueue, Queue<Integer> BusQueue){
         this.cv = cv;
         this.RL = new ReentrantLock[4];
         this.RL = RL;
+        this.CarQueue = CarQueue;
+        this.BusQueue = BusQueue;
+        rand = new Random();
+        rand.setSeed(System.currentTimeMillis());
     }
     
     public void launchThread() throws InterruptedException {
         int id = 1;
-        Random rand = new Random();
-        rand.setSeed(System.currentTimeMillis());
         
         for(int i = 0; i < 4; i++){
             RL[i] = new ReentrantLock();
@@ -41,12 +46,12 @@ public class GenThread extends Thread{
         
         while (true) {
             if(rand.nextInt() % 10 < 8){
-                Car c = new Car(id, cv, RL);
+                Car c = new Car(id, cv, RL, BusQueue, CarQueue);
                 cars = new Thread(c);
                 cars.start();
             }
             else{
-                Bus b = new Bus(id, cv, RL[3]);
+                Bus b = new Bus(id, cv, RL[3], BusQueue);
                 bus = new Thread(bus);
                 bus.start();
             }
