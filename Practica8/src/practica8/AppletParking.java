@@ -19,7 +19,6 @@ public class AppletParking extends Applet {
     GenThread GT;
     CanvasParking CP;
     ReentrantLock[] RLPark; 
-    Queue<Integer> CarQueue;
     Queue<Integer> BusQueue;
 
     /**
@@ -31,9 +30,8 @@ public class AppletParking extends Applet {
         // TODO start asynchronous download of heavy resources
         CP = new CanvasParking(800, 500);
         RLPark = new ReentrantLock[4];
-        CarQueue = new LinkedList();
         BusQueue = new LinkedList();
-        GT = new GenThread(CP, RLPark, CarQueue, BusQueue);
+        GT = new GenThread(CP, RLPark, BusQueue);
         
         this.setSize(800, 500);
         this.add(CP);

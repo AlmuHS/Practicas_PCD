@@ -23,15 +23,13 @@ public class Car implements Runnable {
     private int id;
     private CanvasParking cv;
     private ReentrantLock[] RLock;
-    private Queue<Integer> CarQueue;
     private Queue<Integer> BusQueue;
     private Condition mutex;
 
-    public Car(int id, CanvasParking cv, ReentrantLock[] RL, Queue<Integer> BusQueue, Queue<Integer> CarQueue) {
+    public Car(int id, CanvasParking cv, ReentrantLock[] RL, Queue<Integer> BusQueue) {
         this.id = id;
         this.cv = cv;
         this.RLock = RL;
-        this.CarQueue = CarQueue;
         this.BusQueue = BusQueue;
         mutex = RLock[1].newCondition();
     }
@@ -43,13 +41,11 @@ public class Car implements Runnable {
 
         try {
             cv.inserta(1, id);
-            sleep(1000);
+            sleep(abs(rand.nextInt()%3000));
         } catch (InterruptedException ex) {
             Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        CarQueue.add(id);
-        while (CarQueue.size() > 1 && !BusQueue.isEmpty());
 
         int i = 0;
         
@@ -64,8 +60,7 @@ public class Car implements Runnable {
         if (i == 3 && BusQueue.isEmpty()) {
             cola = 2;
         } 
-
-        CarQueue.remove(id);
+        
         try {
             cv.aparcacoche(id, cola);
             cv.quita(cola, id);
