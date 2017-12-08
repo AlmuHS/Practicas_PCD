@@ -25,6 +25,7 @@ public class Car implements Runnable {
     private ReentrantLock[] RLock;
     private Queue<Integer> CarQueue;
     private Queue<Integer> BusQueue;
+    private Condition mutex;
 
     public Car(int id, CanvasParking cv, ReentrantLock[] RL, Queue<Integer> BusQueue, Queue<Integer> CarQueue) {
         this.id = id;
@@ -32,13 +33,13 @@ public class Car implements Runnable {
         this.RLock = RL;
         this.CarQueue = CarQueue;
         this.BusQueue = BusQueue;
+        mutex = RLock[1].newCondition();
     }
 
     @Override
     public void run() {
         Random rand = new Random();
         int cola = 1;
-        int i = 0;
 
         try {
             cv.inserta(1, id);
@@ -49,18 +50,20 @@ public class Car implements Runnable {
 
         CarQueue.add(id);
         while (CarQueue.size() > 1 && !BusQueue.isEmpty());
+
+        int i = 0;
         
         while (!RLock[i].tryLock()) {
-            if (i < RLock.length) {
+            if (i < RLock.length - 1) {
                 i++;
             } else {
                 i = 0;
             }
         }
-        
-        if(i == 3 && BusQueue.isEmpty()){
+
+        if (i == 3 && BusQueue.isEmpty()) {
             cola = 2;
-        }
+        } 
 
         CarQueue.remove(id);
         try {
@@ -75,5 +78,5 @@ public class Car implements Runnable {
             RLock[i].unlock();
         }
     }
-   
+
 }
