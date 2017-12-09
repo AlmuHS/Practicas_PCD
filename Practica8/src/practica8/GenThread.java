@@ -24,6 +24,7 @@ public class GenThread extends Thread{
     ReentrantLock[] RL;
     Queue<Integer> BusQueue;
     Random rand;
+    ReentrantLock[] RLBus;
     
     
     public GenThread(CanvasParking cv, ReentrantLock[] RL, Queue<Integer> BusQueue){
@@ -33,6 +34,7 @@ public class GenThread extends Thread{
         this.BusQueue = BusQueue;
         rand = new Random();
         rand.setSeed(System.currentTimeMillis());
+        RLBus = new ReentrantLock[2];
     }
     
     public void launchThread() throws InterruptedException {
@@ -49,7 +51,10 @@ public class GenThread extends Thread{
                 cars.start();
             }
             else{
-                Bus b = new Bus(id, cv, RL[3], BusQueue);
+                RLBus[0] = RL[3];
+                RLBus[1] = RL[4];
+          
+                Bus b = new Bus(id, cv, RLBus, BusQueue);
                 b.start();
             }
             id++;

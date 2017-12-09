@@ -22,16 +22,16 @@ public class Bus extends Thread {
 
     private int id;
     private CanvasParking cv;
-    private ReentrantLock RLock;
+    private ReentrantLock[] RLock;
     Queue<Integer> BusQueue;
     Condition empty;
 
-    public Bus(int id, CanvasParking cv, ReentrantLock RL, Queue<Integer> BusQueue) {
+    public Bus(int id, CanvasParking cv, ReentrantLock[] RL, Queue<Integer> BusQueue) {
         this.id = id;
         this.cv = cv;
         RLock = RL;
         this.BusQueue = BusQueue;
-        empty = RLock.newCondition();
+        //empty = RLock.newCondition();
     }
 
     public void run() {
@@ -41,8 +41,23 @@ public class Bus extends Thread {
             cv.inserta(2, id);
             BusQueue.offer(id);
             sleep(abs(rand.nextInt()%3000) + 1000);
-            while (!RLock.tryLock()) {
+            
+            Boolean free1 = false;
+            Boolean free2 = false;
+            
+            while (!free1 || !free2) {
                 //empty.await();
+                free1 = RLock[0].tryLock();
+                free2 = RLock[1].tryLock();
+                
+                if(!free1 && free2){
+                    RLock[1].unlock();
+                    free2 = false;
+                }
+                else if(free1 && !free2){
+                    RLock[0].unlock();
+                    free1 = false;
+                }
             }
             
             try {
@@ -54,7 +69,8 @@ public class Bus extends Thread {
                 
             } finally {
                 cv.salebus();
-                RLock.unlock();
+                RLock[0].unlock();
+                RLock[1].unlock();
             }
             
         }   catch (InterruptedException ex) {
