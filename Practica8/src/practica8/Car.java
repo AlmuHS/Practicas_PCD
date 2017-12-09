@@ -37,7 +37,7 @@ public class Car implements Runnable {
         for (int i = 0; i < RL.length; i++) {
             mutex[i] = RLock[i].newCondition();
         }
-        
+
     }
 
     @Override
@@ -53,30 +53,41 @@ public class Car implements Runnable {
         }
 
         int i = 0;
-        
-        
+
         CarQueue.offer(id);
-        
-        while(CarQueue.element() != id){}
 
-        while (!RLock[i].tryLock()) {
-            if(i < RLock.length - 1) i++;
-            else i = 0;
-        }
-        
-        if (i == 3 && BusQueue.isEmpty()) {
-            cola = 2;
+        //while (CarQueue.peek() != id) {}
+
+        Boolean find = false;
+
+        while (!find) {
+            find = RLock[i].tryLock();
+
+            if (find && i == 3) {
+                if (!BusQueue.isEmpty()) {
+                    find = false;
+                    RLock[i].unlock();
+                } else {
+                    cola = 2;
+                }
+            } else if (!find) {
+                if (i < RLock.length - 1) {
+                    i++;
+                } else {
+                    i = 0;
+                }
+
+            }
+
         }
 
-        
         try {
             cv.aparcacoche(id, cola);
             CarQueue.poll();
             cv.quita(cola, id);
             sleep(abs(rand.nextInt()) % 5000);
             cv.salecoche(id, cola);
-            
-            
+
         } catch (InterruptedException ex) {
             Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
