@@ -20,7 +20,6 @@ public class AppletParking extends Applet {
     CanvasParking CP;
     ReentrantLock[] RLPark; 
     Queue<Integer> BusQueue;
-    Queue<Integer> CarQueue;
     
     /**
      * Initialization method that will be called after the applet is loaded into
@@ -32,8 +31,7 @@ public class AppletParking extends Applet {
         CP = new CanvasParking(800, 500);
         RLPark = new ReentrantLock[4];
         BusQueue = new LinkedList();
-        CarQueue = new LinkedList();
-        GT = new GenThread(CP, RLPark, BusQueue, CarQueue);
+        GT = new GenThread(CP, RLPark, BusQueue);
         
         this.setSize(800, 500);
         this.add(CP);

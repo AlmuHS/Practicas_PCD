@@ -24,15 +24,13 @@ public class Car implements Runnable {
     private CanvasParking cv;
     private ReentrantLock[] RLock;
     private Queue<Integer> BusQueue;
-    Queue<Integer> CarQueue;
     private Condition[] mutex;
 
-    public Car(int id, CanvasParking cv, ReentrantLock[] RL, Queue<Integer> BusQueue, Queue<Integer> CarQueue) {
+    public Car(int id, CanvasParking cv, ReentrantLock[] RL, Queue<Integer> BusQueue) {
         this.id = id;
         this.cv = cv;
         this.RLock = RL;
         this.BusQueue = BusQueue;
-        this.CarQueue = CarQueue;
         mutex = new Condition[5];
         for (int i = 0; i < RL.length; i++) {
             mutex[i] = RLock[i].newCondition();
@@ -54,10 +52,6 @@ public class Car implements Runnable {
 
         int i = 0;
 
-        //CarQueue.offer(id);
-
-        //while (CarQueue.peek().equals(id)) {}
-
         Boolean find = false;
 
         while (!find) {
@@ -77,7 +71,6 @@ public class Car implements Runnable {
 
         try {
             cv.aparcacoche(id, cola);
-            //CarQueue.poll();
             cv.quita(cola, id);
             sleep(abs(rand.nextInt()) % 5000);
         } catch (InterruptedException ex) {
