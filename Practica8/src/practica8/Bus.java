@@ -5,8 +5,10 @@
  */
 package practica8;
 
+import static java.lang.Math.abs;
 import static java.lang.Thread.sleep;
 import java.util.Queue;
+import java.util.Random;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
@@ -33,10 +35,12 @@ public class Bus extends Thread {
     }
 
     public void run() {
+        Random rand = new Random();
+        rand.setSeed(System.currentTimeMillis());
         try {
             cv.inserta(2, id);
             BusQueue.offer(id);
-            sleep(2000);
+            sleep(abs(rand.nextInt()%3000) + 1000);
             while (!RLock.tryLock()) {
                 //empty.await();
             }
@@ -45,7 +49,7 @@ public class Bus extends Thread {
                 cv.quita(2, id);
                 sleep(1000);
                 cv.aparcabus(id);
-                sleep(1000);
+                sleep(abs(rand.nextInt() % 3000));
                 BusQueue.remove(id);
                 
             } finally {

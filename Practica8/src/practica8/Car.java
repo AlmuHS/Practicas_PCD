@@ -41,7 +41,8 @@ public class Car implements Runnable {
     @Override
     public void run() {
         Random rand = new Random();
-        int cola = 1;
+        rand.setSeed(System.currentTimeMillis());
+        int queue = 1;
 
         try {
             cv.inserta(1, id);
@@ -62,7 +63,7 @@ public class Car implements Runnable {
                     find = false;
                     RLock[i].unlock();
                 } else {
-                    cola = 2;
+                    queue = 2;
                 }
             } else if (!find) {
                 i = 1 + i % (RLock.length - 1);
@@ -70,13 +71,14 @@ public class Car implements Runnable {
         }
 
         try {
-            cv.aparcacoche(id, cola);
-            cv.quita(cola, id);
+            cv.quita(queue, id);
+            sleep(500);
+            cv.aparcacoche(id, queue);
             sleep(abs(rand.nextInt()) % 5000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            cv.salecoche(id, cola);
+            cv.salecoche(id, queue);
             RLock[i].unlock();
         }
     }
