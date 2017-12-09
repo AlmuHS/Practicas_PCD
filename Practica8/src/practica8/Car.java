@@ -39,7 +39,7 @@ public class Car implements Runnable {
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         Random rand = new Random();
         rand.setSeed(System.currentTimeMillis());
         int queue = 1;
@@ -52,13 +52,12 @@ public class Car implements Runnable {
         }
 
         int i = 0;
-
         Boolean find = false;
 
         while (!find) {
             find = RLock[i].tryLock();
 
-            if (find && i == 3) {
+            if (find && (i == 3 || i == 4)) {
                 if (!BusQueue.isEmpty()) {
                     find = false;
                     RLock[i].unlock();

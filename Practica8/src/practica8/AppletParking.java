@@ -29,7 +29,7 @@ public class AppletParking extends Applet {
     public void init() {
         // TODO start asynchronous download of heavy resources
         CP = new CanvasParking(800, 500);
-        RLPark = new ReentrantLock[4];
+        RLPark = new ReentrantLock[5];
         BusQueue = new LinkedList();
         GT = new GenThread(CP, RLPark, BusQueue);
         

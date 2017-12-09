@@ -38,7 +38,7 @@ public class GenThread extends Thread{
     public void launchThread() throws InterruptedException {
         int id = 1;
         
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < RL.length; i++){
             RL[i] = new ReentrantLock();
         }
         
@@ -53,7 +53,7 @@ public class GenThread extends Thread{
                 b.start();
             }
             id++;
-            sleep(abs(rand.nextInt()%2000 + 500));
+            sleep(abs(rand.nextInt()%1000 + 500));
         }
         
     }
