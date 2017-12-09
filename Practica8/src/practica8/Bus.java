@@ -5,15 +5,18 @@
  */
 package practica8;
 
+import static java.lang.Thread.sleep;
 import java.util.Queue;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author almu
  */
-public class Bus implements Runnable {
+public class Bus extends Thread {
 
     private int id;
     private CanvasParking cv;
@@ -30,18 +33,27 @@ public class Bus implements Runnable {
     }
 
     public void run() {
-        cv.inserta(2, id);
-        
-        BusQueue.add(id);
-        while (!RLock.tryLock()) {
-        }
-        BusQueue.remove(id);
-        
         try {
-            cv.quita(2, id);
-            cv.aparcabus(id);
-        } finally {
-            RLock.unlock();
+            cv.inserta(2, id);
+            BusQueue.offer(id);
+            sleep(2000);
+            if (!RLock.tryLock()) {
+                empty.wait();
+            }
+            
+            try {
+                cv.quita(2, id);
+                sleep(1000);
+                cv.aparcabus(id);
+                sleep(1000);
+                BusQueue.remove(id);
+                cv.salebus();
+            } finally {
+                RLock.unlock();
+            }
+            
+        }   catch (InterruptedException ex) {
+            Logger.getLogger(Bus.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
