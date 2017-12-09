@@ -37,8 +37,8 @@ public class Bus extends Thread {
             cv.inserta(2, id);
             BusQueue.offer(id);
             sleep(2000);
-            if (!RLock.tryLock()) {
-                empty.wait();
+            while (!RLock.tryLock()) {
+                //empty.await();
             }
             
             try {
@@ -47,8 +47,9 @@ public class Bus extends Thread {
                 cv.aparcabus(id);
                 sleep(1000);
                 BusQueue.remove(id);
-                cv.salebus();
+                
             } finally {
+                cv.salebus();
                 RLock.unlock();
             }
             

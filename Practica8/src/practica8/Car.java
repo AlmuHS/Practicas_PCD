@@ -54,9 +54,9 @@ public class Car implements Runnable {
 
         int i = 0;
 
-        CarQueue.offer(id);
+        //CarQueue.offer(id);
 
-        //while (CarQueue.peek() != id) {}
+        //while (CarQueue.peek().equals(id)) {}
 
         Boolean find = false;
 
@@ -71,26 +71,19 @@ public class Car implements Runnable {
                     cola = 2;
                 }
             } else if (!find) {
-                if (i < RLock.length - 1) {
-                    i++;
-                } else {
-                    i = 0;
-                }
-
+                i = 1 + i % (RLock.length - 1);
             }
-
         }
 
         try {
             cv.aparcacoche(id, cola);
-            CarQueue.poll();
+            //CarQueue.poll();
             cv.quita(cola, id);
             sleep(abs(rand.nextInt()) % 5000);
-            cv.salecoche(id, cola);
-
         } catch (InterruptedException ex) {
             Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+            cv.salecoche(id, cola);
             RLock[i].unlock();
         }
     }
