@@ -20,8 +20,8 @@ public class Shared {
     private int freeBus;
     ReentrantLock RLockCar;
     private final ReentrantLock RLockBus;
-    private Condition mutexCar;
-    private Condition mutexBus;
+    private final Condition mutexCar;
+    private final Condition mutexBus;
     
     public Shared(){
         freeCar = 5;
@@ -44,7 +44,7 @@ public class Shared {
                 else{
                     mutexCar.await();
                     if(freeCar > 0) freeCar--;
-                    if(freeCar == 0) RLockCar.lock();
+                    if(freeCar == 0 && freeBus == 0) RLockCar.lock();
                 }
             }
             
