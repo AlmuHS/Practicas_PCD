@@ -39,7 +39,6 @@ public class Bus extends Thread {
             share.addBus();
    
             cv.quita(2, id);
-            sleep(1000);
             cv.aparcabus(id);
             sleep(abs(rand.nextInt() % 3000));
 

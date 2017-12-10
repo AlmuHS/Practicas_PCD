@@ -47,7 +47,6 @@ public class Car implements Runnable {
 
         try {
             cv.quita(1, id);
-            sleep(500);
             cv.aparcacoche(id, queue);
             
             sleep(abs(rand.nextInt()) % 5000);
