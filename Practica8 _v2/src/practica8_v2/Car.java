@@ -51,11 +51,11 @@ public class Car implements Runnable {
             cv.aparcacoche(id, queue);
             
             sleep(abs(rand.nextInt()) % 5000);
-            cv.salecoche(id, queue);
+            
         } catch (InterruptedException ex) {
             Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            
+            cv.salecoche(id, queue);
             share.delCar(queue);
         }
 
