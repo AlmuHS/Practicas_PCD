@@ -54,8 +54,8 @@ public class GenThread extends Thread{
                 RLBus[0] = RL[3];
                 RLBus[1] = RL[4];
           
-                Bus b = new Bus(id, cv, RLBus, BusQueue);
-                b.start();
+                bus = new Bus(id, cv, RLBus, BusQueue);
+                bus.start();
             }
             id++;
             sleep(abs(rand.nextInt()%1000 + 500));

@@ -46,7 +46,6 @@ public class Bus extends Thread {
             Boolean free2 = false;
             
             while (!free1 || !free2) {
-                //empty.await();
                 free1 = RLock[0].tryLock();
                 free2 = RLock[1].tryLock();
                 

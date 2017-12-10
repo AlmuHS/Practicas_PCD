@@ -32,6 +32,7 @@ public class Car implements Runnable {
         this.RLock = RL;
         this.BusQueue = BusQueue;
         mutex = new Condition[5];
+        
         for (int i = 0; i < RL.length; i++) {
             mutex[i] = RLock[i].newCondition();
         }
@@ -39,7 +40,7 @@ public class Car implements Runnable {
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         Random rand = new Random();
         rand.setSeed(System.currentTimeMillis());
         int queue = 1;
