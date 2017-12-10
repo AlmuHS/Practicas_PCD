@@ -7,7 +7,6 @@ package practica8_v2;
 
 import static java.lang.Math.abs;
 import static java.lang.Thread.sleep;
-import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
@@ -21,14 +20,12 @@ public class Car implements Runnable {
 
     private int id;
     private CanvasParking cv;
-    private Queue<Integer> BusQueue;
     
     private Shared share;
 
-    public Car(int id, CanvasParking cv, ReentrantLock RL, Queue<Integer> BusQueue, Shared share) {
+    public Car(int id, CanvasParking cv, ReentrantLock RL, Shared share) {
         this.id = id;
         this.cv = cv;
-        this.BusQueue = BusQueue;
         this.share = share;
         
     }
@@ -49,10 +46,9 @@ public class Car implements Runnable {
         queue = share.addCar();
 
         try {
-            cv.quita(queue, id);
+            cv.quita(1, id);
             sleep(500);
             cv.aparcacoche(id, queue);
-            
             
             sleep(abs(rand.nextInt()) % 5000);
             cv.salecoche(id, queue);

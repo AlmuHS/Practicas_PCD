@@ -24,7 +24,7 @@ public class Shared {
     private Condition mutexBus;
     
     public Shared(){
-        freeCar = 3;
+        freeCar = 5;
         freeBus = 2;
         RLockCar = new ReentrantLock();
         RLockBus = new ReentrantLock();
@@ -39,6 +39,7 @@ public class Shared {
                 if(!RLockBus.isLocked()){
                     queue = 2;
                     freeBus--;
+                    if(freeBus == 0) RLockBus.lock();
                 }
                 else{
                     mutexCar.await();
@@ -55,7 +56,8 @@ public class Shared {
     
     public synchronized void delCar(int queue){
         if(queue == 1){
-            if(freeCar < 3) freeCar++;
+            if(freeCar < 5) freeCar++;
+            
             if(RLockCar.isLocked()){
                 RLockCar.unlock();
                 mutexCar.signalAll();
@@ -63,29 +65,27 @@ public class Shared {
         }
         else if(queue == 2){
             if(freeBus < 2) freeBus++;
-            if(RLockBus.isLocked()) RLockBus.unlock();
-        }
-        
+            RLockBus.unlock();
+        } 
     }
     
     public void addBus(){
         try {
-            if(RLockBus.isLocked()) mutexBus.await();
+            if(RLockBus.isLocked() || freeBus < 2) mutexBus.await();
+            freeBus = 0;
+            RLockBus.lock();
             
-            if(freeBus > 0) freeBus--;
-            if(freeBus == 0) RLockBus.lock();
         } catch (InterruptedException ex) {
             Logger.getLogger(Shared.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     public void delBus(){
-        if(freeBus < 2) freeBus++;
-        if(RLockCar.isLocked()) RLockBus.unlock();
+        freeBus = 2;
+        RLockBus.unlock();
+        mutexBus.signalAll();
     }
     
-    public ReentrantLock getLockBus(){
-        return RLockBus;
-    }
+    
     
 }

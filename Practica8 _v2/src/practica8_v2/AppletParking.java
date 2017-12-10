@@ -7,8 +7,6 @@ package practica8_v2;
  */
 
 import java.applet.Applet;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -19,7 +17,6 @@ public class AppletParking extends Applet {
     GenThread GT;
     CanvasParking CP;
     ReentrantLock RLPark; 
-    Queue<Integer> BusQueue;
     Shared share;
     
     /**
@@ -31,10 +28,9 @@ public class AppletParking extends Applet {
         // TODO start asynchronous download of heavy resources
         CP = new CanvasParking(800, 500);
         RLPark = new ReentrantLock();
-        BusQueue = new LinkedList();
         share = new Shared();
         
-        GT = new GenThread(CP, RLPark, BusQueue, share);
+        GT = new GenThread(CP, RLPark, share);
         
         this.setSize(800, 500);
         this.add(CP);

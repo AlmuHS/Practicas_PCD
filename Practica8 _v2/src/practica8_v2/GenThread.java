@@ -6,7 +6,6 @@
 package practica8_v2;
 
 import static java.lang.Math.abs;
-import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
@@ -22,16 +21,14 @@ public class GenThread extends Thread{
     Thread bus;
     CanvasParking cv;
     ReentrantLock RL;
-    Queue<Integer> BusQueue;
     Random rand;
     Shared share;
     
     
-    public GenThread(CanvasParking cv, ReentrantLock RL, Queue<Integer> BusQueue, Shared share){
+    public GenThread(CanvasParking cv, ReentrantLock RL, Shared share){
         this.cv = cv;
         
         this.RL = RL;
-        this.BusQueue = BusQueue;
         this.share = share;
         rand = new Random();
         rand.setSeed(System.currentTimeMillis());
@@ -43,12 +40,12 @@ public class GenThread extends Thread{
         
         while (true) {
             if(rand.nextInt() % 10 < 9){
-                Car c = new Car(id, cv, RL, BusQueue, share);
+                Car c = new Car(id, cv, RL, share);
                 cars = new Thread(c);
                 cars.start();
             }
             else{
-                Bus b = new Bus(id, cv, RL, BusQueue, share);
+                Bus b = new Bus(id, cv, RL, share);
                 b.start();
             }
             id++;
