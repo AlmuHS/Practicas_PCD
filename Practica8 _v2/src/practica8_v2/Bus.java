@@ -34,7 +34,7 @@ public class Bus extends Thread {
         rand.setSeed(System.currentTimeMillis());
         try {
             cv.inserta(2, id);
-            sleep(abs(rand.nextInt() % 3000) + 1000);
+            sleep(abs(rand.nextInt() % 1000));
             
             share.addBus();
    

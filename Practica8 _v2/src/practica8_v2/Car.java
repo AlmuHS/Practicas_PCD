@@ -31,7 +31,7 @@ public class Car implements Runnable {
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         Random rand = new Random();
         rand.setSeed(System.currentTimeMillis());
         int queue = 1;

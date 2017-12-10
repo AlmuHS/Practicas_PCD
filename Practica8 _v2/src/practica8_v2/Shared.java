@@ -32,7 +32,7 @@ public class Shared {
         mutexBus = RLockBus.newCondition();
     }
 
-    public synchronized int addCar() {
+    public int addCar() {
         int queue = 1;
         try {
 
@@ -63,7 +63,7 @@ public class Shared {
         return queue;
     }
 
-    public synchronized void delCar(int queue) {
+    public void delCar(int queue) {
         if (queue == 1) {
             if (freeCar < 5) {
                 freeCar++;
