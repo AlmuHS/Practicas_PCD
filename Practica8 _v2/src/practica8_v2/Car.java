@@ -23,7 +23,7 @@ public class Car implements Runnable {
     
     private Shared share;
 
-    public Car(int id, CanvasParking cv, ReentrantLock RL, Shared share) {
+    public Car(int id, CanvasParking cv, Shared share) {
         this.id = id;
         this.cv = cv;
         this.share = share;

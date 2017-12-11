@@ -8,7 +8,6 @@ package practica8_v2;
 import static java.lang.Math.abs;
 import static java.lang.Thread.sleep;
 import java.util.Random;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +21,7 @@ public class Bus extends Thread {
     private CanvasParking cv;
     Shared share;
 
-    public Bus(int id, CanvasParking cv, ReentrantLock RL, Shared share) {
+    public Bus(int id, CanvasParking cv, Shared share) {
         this.id = id;
         this.cv = cv;
         this.share = share;

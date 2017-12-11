@@ -20,15 +20,13 @@ public class GenThread extends Thread{
     Thread cars;
     Thread bus;
     CanvasParking cv;
-    ReentrantLock RL;
     Random rand;
     Shared share;
     
     
-    public GenThread(CanvasParking cv, ReentrantLock RL, Shared share){
+    public GenThread(CanvasParking cv, Shared share){
         this.cv = cv;
         
-        this.RL = RL;
         this.share = share;
         rand = new Random();
         rand.setSeed(System.currentTimeMillis());
@@ -40,12 +38,12 @@ public class GenThread extends Thread{
         
         while (true) {
             if(rand.nextInt() % 10 < 9){
-                Car c = new Car(id, cv, RL, share);
+                Car c = new Car(id, cv, share);
                 cars = new Thread(c);
                 cars.start();
             }
             else{
-                Bus b = new Bus(id, cv, RL, share);
+                Bus b = new Bus(id, cv, share);
                 b.start();
             }
             id++;

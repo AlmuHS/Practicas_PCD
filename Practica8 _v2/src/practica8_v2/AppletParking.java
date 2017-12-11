@@ -16,7 +16,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class AppletParking extends Applet {
     GenThread GT;
     CanvasParking CP;
-    ReentrantLock RLPark; 
     Shared share;
     
     /**
@@ -27,10 +26,9 @@ public class AppletParking extends Applet {
     public void init() {
         // TODO start asynchronous download of heavy resources
         CP = new CanvasParking(800, 500);
-        RLPark = new ReentrantLock();
         share = new Shared();
         
-        GT = new GenThread(CP, RLPark, share);
+        GT = new GenThread(CP, share);
         
         this.setSize(800, 500);
         this.add(CP);

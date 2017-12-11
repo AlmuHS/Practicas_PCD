@@ -71,7 +71,7 @@ public class Shared {
 
             if (RLockCar.isLocked()) {
                 RLockCar.unlock();
-                mutexCar.signalAll();
+                mutexCar.signal();
             }
         } else if (queue == 2) {
             if (freeBus < 2) {
