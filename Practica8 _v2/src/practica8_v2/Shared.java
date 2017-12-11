@@ -78,6 +78,7 @@ public class Shared {
                 freeBus++;
             }
             RLockBus.unlock();
+            mutexBus.signal();
         }
     }
 
