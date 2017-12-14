@@ -38,8 +38,9 @@ public class Bus extends Thread {
             share.addBus();
    
             cv.quita(2, id);
+            sleep(100);
             cv.aparcabus(id);
-            sleep(abs(rand.nextInt() % 3000));
+            sleep(abs(rand.nextInt() % 2000 + 1000));
 
         } catch (InterruptedException ex) {
             Logger.getLogger(Bus.class.getName()).log(Level.SEVERE, null, ex);

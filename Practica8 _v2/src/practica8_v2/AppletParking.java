@@ -26,7 +26,6 @@ public class AppletParking extends Applet {
         // TODO start asynchronous download of heavy resources
         CP = new CanvasParking(800, 500);
         share = new Shared();
-        
         GT = new GenThread(CP, share);
         
         this.setSize(800, 500);
