@@ -48,7 +48,7 @@ public class Car implements Runnable {
             cv.quita(1, id);
             cv.aparcacoche(id, queue);
             
-            sleep(abs(rand.nextInt()) % 1000 + 1000);
+            sleep(abs(rand.nextInt()) % 2000 + 1000);
             
         } catch (InterruptedException ex) {
             Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);

@@ -42,9 +42,9 @@ public class Shared {
         try {
 
             RLockCar.lock();
-            
+
             if ((numParkedCar == 3) && (numParkedCarinBus == 2 || ParkedBus || BusWaiting > 0)) {
-                
+
                 mutexCar.await();
             }
 
@@ -55,7 +55,7 @@ public class Shared {
                 queue = 2;
                 numParkedCarinBus++;
             }
-            
+
             return queue;
 
         } catch (InterruptedException ex) {
@@ -81,9 +81,12 @@ public class Shared {
                     numParkedCarinBus--;
                 }
             }
-            
-            mutexCar.signal();
-            if(BusWaiting > 0) mutexBus.signal();
+
+            if (numParkedCarinBus == 0 && BusWaiting > 0) {
+                mutexBus.signal();
+            } else if (numParkedCarinBus >= 0 && BusWaiting == 0) {
+                mutexCar.signal();
+            }
 
         } finally {
             RLockCar.unlock();
@@ -98,7 +101,7 @@ public class Shared {
             if (numParkedCarinBus > 0 || ParkedBus) {
                 mutexBus.await();
             }
-            
+
             BusWaiting--;
             ParkedBus = true;
 
@@ -106,7 +109,6 @@ public class Shared {
             Logger.getLogger(Shared.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             RLockCar.unlock();
-           
 
         }
     }
@@ -117,13 +119,16 @@ public class Shared {
             RLockCar.lock();
 
             ParkedBus = false;
-            
-            mutexCar.signal();
-            if(BusWaiting > 0) mutexBus.signal();
+
+            if (BusWaiting > 0) {
+                mutexBus.signal();
+            } else {
+                mutexCar.signal();
+            }
 
         } finally {
             RLockCar.unlock();
-            
+
         }
     }
 
