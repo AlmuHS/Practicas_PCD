@@ -20,6 +20,7 @@ public class Shared {
     private int numParkedCarinBus;
     private Boolean ParkedBus;
     private int BusWaiting;
+    private int CarWaiting;
 
     ReentrantLock RLockCar;
     private final ReentrantLock RLockBus;
@@ -32,6 +33,7 @@ public class Shared {
         numParkedCarinBus = 0;
         ParkedBus = false;
         BusWaiting = 0;
+        CarWaiting = 0;
 
         RLockCar = new ReentrantLock();
         RLockBus = new ReentrantLock();
@@ -45,7 +47,8 @@ public class Shared {
 
             RLockCar.lock();
 
-            if ((numParkedCar == 3 && numParkedCarinBus == 2) || ParkedBus || BusWaiting > 0) {
+            if ((numParkedCar == 3) && (numParkedCarinBus == 2 || ParkedBus || BusWaiting > 0)) {
+                CarWaiting++;
                 mutexCar.await();
             }
 
@@ -56,8 +59,8 @@ public class Shared {
                 queue = 2;
                 numParkedCarinBus++;
             }
-
-            mutexCar.signal();
+            
+            CarWaiting--;
 
         } catch (InterruptedException ex) {
             Logger.getLogger(Shared.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,6 +86,9 @@ public class Shared {
                     numParkedCarinBus--;
                 }
             }
+            
+            if(CarWaiting > 0) mutexCar.signal();
+            if(BusWaiting > 0) mutexBus.signal();
 
         } finally {
             RLockCar.unlock();
@@ -95,17 +101,17 @@ public class Shared {
             RLockCar.lock();
             BusWaiting++;
             if (numParkedCarinBus > 0 || ParkedBus) {
-
                 mutexBus.await();
             }
-
+            
+            BusWaiting--;
             ParkedBus = true;
 
         } catch (InterruptedException ex) {
             Logger.getLogger(Shared.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             RLockCar.unlock();
-            BusWaiting--;
+           
 
         }
     }
@@ -116,11 +122,13 @@ public class Shared {
             RLockCar.lock();
 
             ParkedBus = false;
-            mutexBus.signal();
-            mutexCar.signal();
+            
+            if(CarWaiting > 0) mutexCar.signal();
+            if(BusWaiting > 0) mutexBus.signal();
 
         } finally {
             RLockCar.unlock();
+            
         }
     }
 
