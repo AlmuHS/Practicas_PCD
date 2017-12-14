@@ -37,7 +37,7 @@ public class Car implements Runnable {
 
         try {
             cv.inserta(1, id);
-            sleep(abs(rand.nextInt() % 1000));
+            sleep(abs(rand.nextInt() % 1000 + 500));
         } catch (InterruptedException ex) {
             Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
         }

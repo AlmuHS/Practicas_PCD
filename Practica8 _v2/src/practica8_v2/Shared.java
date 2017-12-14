@@ -21,7 +21,7 @@ public class Shared {
     private Boolean ParkedBus;
     private int BusWaiting;
 
-    ReentrantLock RLockCar;
+    ReentrantLock RLock;
     private final Condition mutexCar;
     private final Condition mutexBus;
 
@@ -32,19 +32,18 @@ public class Shared {
         ParkedBus = false;
         BusWaiting = 0;
 
-        RLockCar = new ReentrantLock();
-        mutexCar = RLockCar.newCondition();
-        mutexBus = RLockCar.newCondition();
+        RLock = new ReentrantLock();
+        mutexCar = RLock.newCondition();
+        mutexBus = RLock.newCondition();
     }
 
     public int addCar() {
         int queue = 1;
         try {
 
-            RLockCar.lock();
+            RLock.lock();
 
             if ((numParkedCar == 3) && (numParkedCarinBus == 2 || ParkedBus || BusWaiting > 0)) {
-
                 mutexCar.await();
             }
 
@@ -61,7 +60,7 @@ public class Shared {
         } catch (InterruptedException ex) {
             Logger.getLogger(Shared.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            RLockCar.unlock();
+            RLock.unlock();
         }
         return 0;
     }
@@ -69,7 +68,7 @@ public class Shared {
     public void delCar(int queue) {
         try {
 
-            RLockCar.lock();
+            RLock.lock();
 
             if (queue == 1) {
                 if (numParkedCar > 0) {
@@ -89,14 +88,14 @@ public class Shared {
             }
 
         } finally {
-            RLockCar.unlock();
+            RLock.unlock();
         }
 
     }
 
     public void addBus() {
         try {
-            RLockCar.lock();
+            RLock.lock();
             BusWaiting++;
             if (numParkedCarinBus > 0 || ParkedBus) {
                 mutexBus.await();
@@ -108,7 +107,7 @@ public class Shared {
         } catch (InterruptedException ex) {
             Logger.getLogger(Shared.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            RLockCar.unlock();
+            RLock.unlock();
 
         }
     }
@@ -116,7 +115,7 @@ public class Shared {
     public void delBus() {
         try {
 
-            RLockCar.lock();
+            RLock.lock();
 
             ParkedBus = false;
 
@@ -127,7 +126,7 @@ public class Shared {
             }
 
         } finally {
-            RLockCar.unlock();
+            RLock.unlock();
 
         }
     }
