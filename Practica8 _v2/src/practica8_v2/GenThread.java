@@ -7,7 +7,6 @@ package practica8_v2;
 
 import static java.lang.Math.abs;
 import java.util.Random;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

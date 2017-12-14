@@ -7,7 +7,6 @@ package practica8_v2;
  */
 
 import java.applet.Applet;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *

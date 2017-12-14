@@ -15,17 +15,24 @@ import java.util.logging.Logger;
  * @author almu
  */
 public class Shared {
-
-    private int freeCar;
-    private int freeBus;
+    
+    private int numParkedCar;
+    private int numParkedCarinBus;
+    private Boolean ParkedBus;
+    private int BusWaiting;
+    
     ReentrantLock RLockCar;
     private final ReentrantLock RLockBus;
     private final Condition mutexCar;
     private final Condition mutexBus;
 
     public Shared() {
-        freeCar = 5;
-        freeBus = 2;
+       
+        numParkedCar = 0;
+        numParkedCarinBus = 0;
+        ParkedBus = false;
+        BusWaiting = 0;
+        
         RLockCar = new ReentrantLock();
         RLockBus = new ReentrantLock();
         mutexCar = RLockCar.newCondition();
@@ -35,68 +42,74 @@ public class Shared {
     public int addCar() {
         int queue = 1;
         try {
-
-            if (RLockCar.isLocked()) {
-                if (!RLockBus.isLocked()) {
-                    queue = 2;
-                    freeBus--;
-                    if (freeBus == 0) {
-                        RLockBus.lock();
-                    }
-                } else {
-                    while (RLockCar.isLocked()) {
-                        mutexCar.await();
-                    }
-
-                    if (freeCar > 0) {
-                        freeCar--;
-                    }
-                    if (freeCar == 0 && freeBus == 0) {
-                        RLockCar.lock();
-                    }
-                }
+            
+            if((numParkedCar == 3 && numParkedCarinBus == 2) || ParkedBus || BusWaiting > 0){
+                mutexCar.await();
+            }
+            
+            if(numParkedCar < 3){
+                queue = 1;
+                numParkedCar++;
+            }
+            else{
+                queue = 2;
+                numParkedCarinBus++;
+            }
+            
+            if(numParkedCar >= 3){
+                RLockCar.lock();
+            
+            }
+            else if(numParkedCarinBus >= 2){
+                RLockBus.lock();
             }
 
         } catch (InterruptedException ex) {
             Logger.getLogger(Shared.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
         return queue;
     }
 
     public void delCar(int queue) {
+        
+        try{
         if (queue == 1) {
-            if (freeCar < 5) {
-                freeCar++;
+            if (numParkedCar > 0) {
+                numParkedCar--;
             }
-
-            if (RLockCar.isLocked()) {
-                RLockCar.unlock();
-                mutexCar.signal();
-            }
+            
         } else if (queue == 2) {
-            if (freeBus < 2) {
-                freeBus++;
+            if (numParkedCarinBus > 0) {
+                numParkedCarinBus--;
             }
-            RLockBus.unlock();
-            mutexBus.signal();
         }
+        
+        }finally{
+           if(RLockCar.isLocked()) RLockCar.unlock();
+           else if (RLockBus.isLocked()) RLockBus.unlock(); 
+        }
+        
     }
 
     public void addBus() {
         try {
-            while (RLockBus.isLocked()) {
+            if (numParkedCarinBus > 0 || BusWaiting > 0) {
+                BusWaiting++;
                 mutexBus.await();
+                
             }
+            ParkedBus = true;
+            BusWaiting--;
+           
             RLockBus.lock();
-            freeBus = 0;
-
         } catch (InterruptedException ex) {
             Logger.getLogger(Shared.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void delBus() {
-        freeBus = 2;
+        ParkedBus = false;
         RLockBus.unlock();
         mutexBus.signalAll();
     }
