@@ -9,6 +9,7 @@ import static java.lang.Math.abs;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.lang.Math.abs;
 
 /**
  *
@@ -20,13 +21,13 @@ public class GenThread extends Thread{
     Thread bus;
     CanvasParking cv;
     Random rand;
-    Shared share;
+    Monitor monitor;
     
     
-    public GenThread(CanvasParking cv, Shared share){
+    public GenThread(CanvasParking cv, Monitor monitor){
         this.cv = cv;
         
-        this.share = share;
+        this.monitor = monitor;
         rand = new Random();
         rand.setSeed(System.currentTimeMillis());
         
@@ -37,12 +38,12 @@ public class GenThread extends Thread{
         
         while (true) {
             if(rand.nextInt() % 10 < 9){
-                Car c = new Car(id, cv, share);
+                Car c = new Car(id, cv, monitor);
                 cars = new Thread(c);
                 cars.start();
             }
             else{
-                Bus b = new Bus(id, cv, share);
+                Bus b = new Bus(id, cv, monitor);
                 b.start();
             }
             id++;

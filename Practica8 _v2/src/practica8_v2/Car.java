@@ -10,6 +10,8 @@ import static java.lang.Thread.sleep;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.lang.Math.abs;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -20,12 +22,12 @@ public class Car implements Runnable {
     private int id;
     private CanvasParking cv;
     
-    private Shared share;
+    private Monitor monitor;
 
-    public Car(int id, CanvasParking cv, Shared share) {
+    public Car(int id, CanvasParking cv, Monitor monitor) {
         this.id = id;
         this.cv = cv;
-        this.share = share;
+        this.monitor = monitor;
         
     }
 
@@ -42,7 +44,7 @@ public class Car implements Runnable {
             Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        queue = share.addCar();
+        queue = monitor.addCar();
 
         try {
             cv.quita(1, id);
@@ -54,7 +56,7 @@ public class Car implements Runnable {
             Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             cv.salecoche(id, queue);
-            share.delCar(queue);
+            monitor.delCar(queue);
         }
 
     }

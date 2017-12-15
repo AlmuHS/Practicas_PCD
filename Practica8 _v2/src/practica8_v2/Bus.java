@@ -10,6 +10,8 @@ import static java.lang.Thread.sleep;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.lang.Math.abs;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -19,12 +21,12 @@ public class Bus extends Thread {
 
     private int id;
     private CanvasParking cv;
-    Shared share;
+    Monitor monitor;
 
-    public Bus(int id, CanvasParking cv, Shared share) {
+    public Bus(int id, CanvasParking cv, Monitor monitor) {
         this.id = id;
         this.cv = cv;
-        this.share = share;
+        this.monitor = monitor;
        
     }
 
@@ -33,9 +35,9 @@ public class Bus extends Thread {
         rand.setSeed(System.currentTimeMillis());
         try {
             cv.inserta(2, id);
-            sleep(abs(rand.nextInt() % 1000));
+            sleep(abs(rand.nextInt() % 1000 + 500));
             
-            share.addBus();
+            monitor.addBus();
    
             cv.quita(2, id);
             sleep(100);
@@ -47,7 +49,7 @@ public class Bus extends Thread {
 
         } finally {
             cv.salebus();
-            share.delBus();
+            monitor.delBus();
         }
 
     }

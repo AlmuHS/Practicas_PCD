@@ -15,7 +15,7 @@ import java.applet.Applet;
 public class AppletParking extends Applet {
     GenThread GT;
     CanvasParking CP;
-    Shared share;
+    Monitor monitor;
     
     /**
      * Initialization method that will be called after the applet is loaded into
@@ -25,8 +25,8 @@ public class AppletParking extends Applet {
     public void init() {
         // TODO start asynchronous download of heavy resources
         CP = new CanvasParking(800, 500);
-        share = new Shared();
-        GT = new GenThread(CP, share);
+        monitor = new Monitor();
+        GT = new GenThread(CP, monitor);
         
         this.setSize(800, 500);
         this.add(CP);

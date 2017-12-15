@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author almu
  */
-public class Shared {
+public class Monitor {
 
     private int numParkedCar;
     private int numParkedCarinBus;
@@ -25,7 +25,7 @@ public class Shared {
     private final Condition mutexCar;
     private final Condition mutexBus;
 
-    public Shared() {
+    public Monitor() {
 
         numParkedCar = 0;
         numParkedCarinBus = 0;
@@ -58,7 +58,7 @@ public class Shared {
             return queue;
 
         } catch (InterruptedException ex) {
-            Logger.getLogger(Shared.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Monitor.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             RLock.unlock();
         }
@@ -105,7 +105,7 @@ public class Shared {
             ParkedBus = true;
 
         } catch (InterruptedException ex) {
-            Logger.getLogger(Shared.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Monitor.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             RLock.unlock();
 
