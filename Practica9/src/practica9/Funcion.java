@@ -9,13 +9,15 @@ package practica9;
  *
  * @author almu
  */
-public class Practica9 {
-
+public class Funcion {
+    
     /**
-     * @param args the command line arguments
+     *
+     * @param x
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static double fn(double x){
+        return 0;
+        
     }
     
 }
