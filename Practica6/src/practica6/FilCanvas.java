@@ -1,44 +1,82 @@
 /*
- * Copyright (C) 2017 Almudena García Jurado-Centurión
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 
 package practica6;
 
+
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+
 
 /**
  *
- * @author almu
+ * @author pedro
  */
-public class FilCanvas extends Canvas{
-    private int[] estados;
-    
-    @Override
-    public void paint(Graphics g){
-        
+public class FilCanvas extends Canvas {
+
+    private int[] estados = new int[5];
+    Image[] status = new Image[5];
+
+    public FilCanvas(int ancho, int alto) {
+        this.setSize(ancho, alto);
+        this.setBackground(Color.white);
+        for (int i = 0; i < 5; i++) {
+            estados[i] = 0;
+        }
+        status[0] = Toolkit.getDefaultToolkit().getImage(getClass().getResource("image/piensa.gif"));
+        status[1] = Toolkit.getDefaultToolkit().getImage(getClass().getResource("image/hambre.gif"));
+        status[2] = Toolkit.getDefaultToolkit().getImage(getClass().getResource("image/conizquierdo.gif"));
+        status[3] = Toolkit.getDefaultToolkit().getImage(getClass().getResource("image/conderecho.gif"));
+        status[4] = Toolkit.getDefaultToolkit().getImage(getClass().getResource("image/come.gif"));
     }
-    
+
+    public synchronized void ponestado(int filo, int estado) {
+        estados[filo] = estado;
+        this.repaint();
+    }
+
     @Override
     public void update(Graphics g){
-        
+        paint(g);
     }
     
-    public void setEstado(int filosofo, int estado){
-        
+    @Override
+    public synchronized void paint(Graphics g) {
+        MediaTracker dibu = new MediaTracker(this);
+         BufferedImage imagen = new BufferedImage(getWidth(), getHeight(), ColorModel.OPAQUE);
+        Graphics gbuf = imagen.getGraphics();
+
+
+        try {
+
+            for (int i = 0; i < 5; i++) {
+                dibu.addImage(status[i], i);
+                dibu.waitForID(i);
+            }
+
+        } catch (java.lang.InterruptedException e) {
+            System.out.println("Couldn't load one of the images");
+        }
+
+        gbuf.setColor(Color.white);
+        gbuf.fillRect(0, 0, this.getWidth(), this.getHeight());
+        gbuf.setColor(Color.blue);
+        gbuf.fillRect(10, 100, 500, 100);
+        gbuf.drawImage(status[estados[0]], 10, 10, null);
+        gbuf.drawImage(status[estados[1]], 110, 10, null);
+        gbuf.drawImage(status[estados[2]], 210, 10, null);
+        gbuf.drawImage(status[estados[3]], 310, 10, null);
+        gbuf.drawImage(status[estados[4]], 410, 10, null);
+                        
+        g.drawImage(imagen, 0, 0, this);
+
     }
-    
 }

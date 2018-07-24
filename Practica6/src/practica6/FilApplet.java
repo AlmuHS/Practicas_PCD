@@ -1,0 +1,71 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package practica6;
+
+import java.applet.Applet;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author almu
+ */
+public class FilApplet extends Applet{
+    Filosofo[] filosofos;
+    Semaforo[] palillos;
+    Semaforo[] sentados;
+    
+    int numfilosofos;
+    FilCanvas canvas;
+    
+    @Override
+    public void init(){
+        
+        palillos = new Semaforo[numfilosofos];
+        sentados = new Semaforo[numfilosofos];
+        filosofos = new Filosofo[numfilosofos];
+        
+        canvas = new FilCanvas(800, 800);
+        
+        
+        for (int i = 0; i < numfilosofos; i++) {
+            try {
+                palillos[i] = new Semaforo(1);
+                sentados[i] = new Semaforo(1);
+            } catch (Exception ex) {
+                Logger.getLogger(FilApplet.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
+        
+        for (int i = 0; i < numfilosofos; i++) {
+            filosofos[i] = new Filosofo(i, palillos[i], palillos[(i%numfilosofos)+1], sentados[i], canvas);
+        }
+        
+        this.add(canvas);
+    }
+    
+    @Override
+    public void start(){
+        for (Filosofo filosofo : filosofos) {
+            try {
+                sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FilApplet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            filosofo.start();
+        }
+    }
+    
+    @Override
+    public void stop(){
+        for (Filosofo filosofo : filosofos) {
+            filosofo.interrupt();
+        }
+    }
+    
+    
+}

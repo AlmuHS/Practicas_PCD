@@ -1,43 +1,64 @@
 /*
- * Copyright (C) 2017 Almudena García Jurado-Centurión
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-
 package practica6;
 
-import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author almu
  */
-public class Filosofo extends Thread{
-    private int id;
-    private Semaphore izquierdo;
-    private Semaphore derecho;
-    private Semaphore sentados;
-    private FilCanvas canvas;
-    
-    public Filosofo(int id, Semaphore izquierdo, Semaphore derecho, Semaphore sentados, FilCanvas canvas){
-        
+public class Filosofo extends Thread {
+
+    int id;
+    Semaforo izquierdo;
+    Semaforo derecho;
+    Semaforo sentados;
+    FilCanvas canvas;
+
+    Filosofo(int id, Semaforo izquierdo, Semaforo derecho, Semaforo sentados, FilCanvas canvas) {
+        this.id = id;
+        this.izquierdo = izquierdo;
+        this.derecho = derecho;
+        this.sentados = sentados;
+        this.canvas = canvas;
     }
-    
-    @Override
-    public void run(){
-        
+
+    public void run() {
+        while (true) {
+
+            try {
+                System.out.println("Filosofo " + id + " pensando");
+                canvas.ponestado(id, 0);
+                
+                sentados.WAIT();
+                canvas.ponestado(id, 1);
+                
+                System.out.println("Filosofo " + id + " sentado, esperando palillo izquierdo");
+                izquierdo.WAIT();
+                canvas.ponestado(id, 2);
+                
+                System.out.println("Filosofo " + id + " sentado, esperando palillo derecho");
+                derecho.WAIT();
+                canvas.ponestado(id, 3);
+                
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Filosofo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            System.out.println("Filosofo " + id + " comiendo");
+
+            try {
+                izquierdo.SIGNAL();
+                derecho.SIGNAL();
+                sentados.SIGNAL();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Filosofo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
-    
-    
 }
