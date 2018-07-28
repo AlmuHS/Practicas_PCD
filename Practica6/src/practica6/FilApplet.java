@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class FilApplet extends Applet{
     Filosofo[] filosofos;
     Semaforo[] palillos;
-    Semaforo[] sentados;
+    SemaforoGeneral sentados;
     
     int numfilosofos;
     FilCanvas canvas;
@@ -26,7 +26,11 @@ public class FilApplet extends Applet{
     public void init(){
         
         palillos = new Semaforo[numfilosofos];
-        sentados = new Semaforo[numfilosofos];
+        try {
+            sentados = new SemaforoGeneral(numfilosofos);
+        } catch (Exception ex) {
+            Logger.getLogger(FilApplet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         filosofos = new Filosofo[numfilosofos];
         
         canvas = new FilCanvas(800, 800);
@@ -35,14 +39,13 @@ public class FilApplet extends Applet{
         for (int i = 0; i < numfilosofos; i++) {
             try {
                 palillos[i] = new Semaforo(1);
-                sentados[i] = new Semaforo(1);
             } catch (Exception ex) {
                 Logger.getLogger(FilApplet.class.getName()).log(Level.SEVERE, null, ex);
             } 
         }
         
         for (int i = 0; i < numfilosofos; i++) {
-            filosofos[i] = new Filosofo(i, palillos[i], palillos[(i%numfilosofos)+1], sentados[i], canvas);
+            filosofos[i] = new Filosofo(i, palillos[i], palillos[(i%numfilosofos)+1], sentados, canvas);
         }
         
         this.add(canvas);
@@ -50,13 +53,15 @@ public class FilApplet extends Applet{
     
     @Override
     public void start(){
-        for (Filosofo filosofo : filosofos) {
+        
+        for (int i = 0; i < numfilosofos; i++) {
             try {
                 sleep(500);
             } catch (InterruptedException ex) {
                 Logger.getLogger(FilApplet.class.getName()).log(Level.SEVERE, null, ex);
             }
-            filosofo.start();
+            filosofos[i].start();
+            
         }
     }
     
