@@ -29,12 +29,13 @@ public class Filosofo extends Thread {
         this.canvas = canvas;
     }
 
+    @Override
     public void run() {
 
         Random rnd = new Random();
         rnd.setSeed(System.currentTimeMillis());
 
-        while (true) {
+        while(true) {
 
             System.out.println("Filosofo " + id + " pensando");
             canvas.ponestado(id, 0);
@@ -51,24 +52,36 @@ public class Filosofo extends Thread {
             try {
                 sentados.WAIT();
                 System.out.println("Filosofo " + id + " sentado, esperando palillo izquierdo");
-                
-                izquierdo.WAIT();
 
+                izquierdo.WAIT();
+                canvas.ponestado(id, 3);
+                
+                
                 System.out.println("Filosofo " + id + " sentado, esperando palillo derecho");
                 derecho.WAIT();
-                canvas.ponestado(id, 3);
+               
 
             } catch (InterruptedException ex) {
                 Logger.getLogger(Filosofo.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+            canvas.ponestado(id, 4);
             System.out.println("Filosofo " + id + " comiendo");
+            try {
+                Thread.sleep(rnd.nextInt(5) * 1000);
+            } catch (InterruptedException ex) {
+                return;
+            }
+            
 
             try {
                 izquierdo.SIGNAL();
                 canvas.ponestado(id, 2);
-                
+
                 derecho.SIGNAL();
+                
+                System.out.println("Filosofo " + id + " termina");
+                
                 sentados.SIGNAL();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Filosofo.class.getName()).log(Level.SEVERE, null, ex);

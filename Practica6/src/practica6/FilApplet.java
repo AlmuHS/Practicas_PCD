@@ -25,15 +25,19 @@ public class FilApplet extends Applet{
     @Override
     public void init(){
         
+        numfilosofos = 5;
+        this.setSize(600, 250);
+        
+        
         palillos = new Semaforo[numfilosofos];
         try {
-            sentados = new SemaforoGeneral(numfilosofos);
+            sentados = new SemaforoGeneral(numfilosofos-1);
         } catch (Exception ex) {
             Logger.getLogger(FilApplet.class.getName()).log(Level.SEVERE, null, ex);
         }
         filosofos = new Filosofo[numfilosofos];
         
-        canvas = new FilCanvas(800, 800);
+        canvas = new FilCanvas(600, 250);
         
         
         for (int i = 0; i < numfilosofos; i++) {
@@ -45,7 +49,7 @@ public class FilApplet extends Applet{
         }
         
         for (int i = 0; i < numfilosofos; i++) {
-            filosofos[i] = new Filosofo(i, palillos[i], palillos[(i%numfilosofos)+1], sentados, canvas);
+            filosofos[i] = new Filosofo(i, palillos[i], palillos[(i+1)%numfilosofos], sentados, canvas);
         }
         
         this.add(canvas);
